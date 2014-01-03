@@ -121,12 +121,33 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="Prototype\css\bootstrap.css" />
+    <Content Include="Prototype\css\custom.css" />
+    <Content Include="Prototype\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Prototype\images\1.jpg" />
+    <Content Include="Prototype\images\2.jpg" />
+    <Content Include="Prototype\images\3.jpg" />
+    <Content Include="Prototype\images\blank.png" />
+    <Content Include="Prototype\images\curtain_top.png" />
+    <Content Include="Prototype\images\frontcurtain.jpg" />
+    <Content Include="Prototype\images\logo.png" />
+    <Content Include="Prototype\images\logo_big.png" />
+    <Content Include="Prototype\images\logo_gray.png" />
+    <Content Include="Prototype\images\logo_new.jpg" />
+    <Content Include="Prototype\images\rope.png" />
+    <Content Include="Prototype\js\bootstrap.js" />
+    <Content Include="Prototype\js\bootstrap.min.js" />
+    <Content Include="Prototype\js\curtain.js" />
+    <Content Include="Prototype\js\jquery-2.0.3.min.js" />
+    <Content Include="Prototype\js\jquery.easing.1.3.js" />
+    <Content Include="Prototype\page.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
@@ -139,10 +160,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\PublishProfiles\www.divadlo-zadvermi.cz.pubxml" />
+    <Content Include="Prototype\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Prototype\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Prototype\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
