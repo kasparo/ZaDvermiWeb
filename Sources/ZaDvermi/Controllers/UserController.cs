@@ -3,106 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using ZaDvermi.Data;
+using ZaDvermi.Models;
 
 namespace ZaDvermi.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
-        private readonly DataContext _database = new DataContext();
-
-        //
-        // GET: /Default1/
-
-        public ActionResult Index()
-        {
-            return View(_database.Users.ToList());
-        }
-
-        //
-        // GET: /Default1/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Default1/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Default1/Create
-
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult LogOn(User model, string returnUrl)
         {
-            try
+            if (this.ModelState.IsValid && Membership.ValidateUser(model.UserName, model.Password))
             {
-                // TODO: Add insert logic here
+                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                if (this.Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            // If we got this far, something failed, redisplay form
+            this.ModelState.AddModelError("", "Incorrect user name or password.");
+            return View(model);
         }
 
-        //
-        // GET: /Default1/Edit/5
 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Default1/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Default1/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Default1/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

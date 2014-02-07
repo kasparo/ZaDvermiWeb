@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace ZaDvermi.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
       
         public ActionResult Index()
