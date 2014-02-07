@@ -74,6 +74,10 @@ footer {
     position: fixed;
 }
 
+.left-curtain.opened, .right-curtain.opened {
+    width: 60px;
+}
+
 .logo {
     position: absolute;
     z-index: 4;

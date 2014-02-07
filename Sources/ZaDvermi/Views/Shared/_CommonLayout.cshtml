@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- CURTAIN -->
+<div class="left-curtain">
+    <img src="~/Content/Images/frontcurtain.jpg" /></div>
+<div class="right-curtain">
+    <img src="~/Content/Images/frontcurtain.jpg" /></div>
+
+@Html.Partial("~/Views/Shared/_NavigationBar.cshtml")
+
+@RenderBody()
+
+@section Scripts
+{
+	<script type="text/javascript">
+		$(document).ready(function () {
+		    openCurtain();
+		});
+	</script>
+}
