@@ -1,0 +1,161 @@
+﻿@model ZaDvermi.Models.Article
+@{
+    ViewBag.Title = "Plkárna";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-2" style="margin-bottom: 15px">
+            <div class="col-xs-6 col-md-4">
+                <button type="button" class="btn btn-primary create-item">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Přidat příspěvek
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        
+        <!-- BOARD -->
+        <div class="col-xs-8 col-md-10">
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content 1
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel contentasdasd 2
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content sd 3
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Panel success</h3>
+                    </div>
+                    <div class="panel-body">
+                        Panel content
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <!-- ALERTS and NOTIFICATIONS -->
+        <div class="col-xs-4 col-md-2">
+            <div class="alert alert-dismissable alert-danger">
+                Pozor, pozor, zkouška ve škole!
+            </div>
+            <button type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- ADD ITEM on BOARD -->
+    <div id="dialog-form" title="Přidat příspěvek na nástěnku">
+	  
+        
+    </div>
+</div>
+
+@section JavaScriptToHead
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".create-item").click(function() {
+                $("#dialog-form").dialog("open");
+            });
+
+        });
+
+        $("#dialog-form").dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Přidat": function() {
+                    
+                },
+                "Zpět": function() {
+                    $(this).dialog("close");
+                }
+            },
+            close: function() {
+                
+            }
+        });
+    </script>
+    	
+}

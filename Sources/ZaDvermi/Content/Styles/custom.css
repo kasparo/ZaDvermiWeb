@@ -1,3 +1,19 @@
+/* COMMON */
+.body-wrapper {
+    padding-top: 90px;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.validation-summary-errors {
+    list-style-type: none;
+    float: right;
+    color: #ff0000;
+}
+
+.field-validation-error {
+    color: #ff0000;
+}
 
 /* NAVIGATION */
 .navbar {
@@ -20,6 +36,10 @@
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     background-color: #C13E13;
+}
+
+.navbar-text {
+    margin: 10px 0 10px 0;
 }
 
 /* JUMBOTRON */

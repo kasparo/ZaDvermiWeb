@@ -1,0 +1,22 @@
+﻿@model ZaDvermi.Models.UserLogin
+
+@if (TempData["VisibleLoginPanel"] != null && (bool) TempData["VisibleLoginPanel"] == false)
+{
+    <span></span>
+}
+else
+{
+
+    using (Html.BeginForm("LogOn", "User",
+                          FormMethod.Post,
+                          new {@class = "navbar-form navbar-right", role = "form"}))
+    {
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.UserName, new {placeholder = "Email", @class = "form-control input-sm"})
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new {placeholder = "Heslo", @class = "form-control input-sm"})
+        </div>
+        <button type="submit" class="btn btn-success btn-sm">Přihlásit</button>
+    }
+}

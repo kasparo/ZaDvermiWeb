@@ -14,10 +14,14 @@ namespace ZaDvermi
                 "~/Content/Scripts/bootstrap.min.js",
                 "~/Content/Scripts/jquery.easing.1.3.js",
                 "~/Content/Scripts/jquery.cookie.js",
+                "~/Content/Scripts/jquery-ui-1.10.4.custom.min.js",
+                "~/Content/Scripts/jquery.ui.datepicker-cs-CZ.min.js",
                 "~/Content/Scripts/curtain.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/Content/Styles/bootstrap.css",
+                "~/Content/Styles/jquery-ui-1.10.0.ie.css",
+                "~/Content/Styles/jquery-ui-1.10.0.custom.css",
                 "~/Content/Styles/custom.css"));
         }
     }

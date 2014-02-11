@@ -1,0 +1,8 @@
+﻿@model ZaDvermi.Models.User
+
+<div class="navbar-text navbar-right">
+    @Html.ActionLink(Model.FullName,"Edit", "User", new { id = Model.Id }, new { @class = "btn btn-success btn-sm" })&nbsp;
+    @Html.ActionLink("Odhlásit", "LogOut", "User", new { @class = "btn btn-primary btn-sm" })
+</div>
+
+

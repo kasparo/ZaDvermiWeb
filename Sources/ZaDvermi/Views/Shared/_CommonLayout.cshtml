@@ -10,13 +10,18 @@
 
 @Html.Partial("~/Views/Shared/_NavigationBar.cshtml")
 
-@RenderBody()
+<div class="body-wrapper">
+    @RenderBody()
+</div>
 
 @section Scripts
 {
-	<script type="text/javascript">
-		$(document).ready(function () {
-		    openCurtain();
-		});
-	</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            openCurtain();
+        });
+    </script>
+    
+    @RenderSection("JavaScriptToHead", false)
 }
+

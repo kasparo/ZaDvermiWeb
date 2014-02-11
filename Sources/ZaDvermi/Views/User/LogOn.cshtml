@@ -1,0 +1,38 @@
+﻿@model ZaDvermi.Models.UserLogin
+
+@{
+    ViewBag.Title = "Přihlášení";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+@using (Html.BeginForm("LogOn", "User",
+                       FormMethod.Post,
+                       new {role = "form"}))
+{
+    <div class="container">
+        
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="well">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName, new { placeholder = "Email", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UserName, null, new {@class="help-block"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Heslo", @class = "form-control", type = "password" })
+                        @Html.ValidationMessageFor(m => m.Password, null, new {@class="help-block"})
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(m => m.RememberMe)Zapamatovat si přihlášení
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm">Přihlásit</button>
+                    @Html.ValidationSummary(true, null, new {@class="help-block"})
+                </div>
+            </div>
+        </div>
+    </div>
+}

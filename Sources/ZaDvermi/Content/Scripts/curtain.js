@@ -59,4 +59,5 @@ function openCurtain() {
     $(".left-curtain").addClass("opened");
     
     $(".navbar .container").show();
+    $(".logo").hide();
 }

@@ -1,0 +1,110 @@
+﻿@model ZaDvermi.Models.User
+
+@{
+    ViewBag.Title = "Detail divadelníka";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "User",
+                       FormMethod.Post,
+                       new {role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="well">
+                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FirstName)
+                                @Html.TextBoxFor(m => m.FirstName, new {placeholder = "Jméno", @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.FirstName, null, new {@class = "help-block"})
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LastName)
+                                @Html.TextBoxFor(m => m.LastName, new {placeholder = "Oslovení", @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.LastName, null, new {@class = "help-block"})
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.NickName)
+                                @Html.TextBoxFor(m => m.NickName, new {placeholder = "Přezdívka", @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.NickName, null, new {@class = "help-block"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email)
+                                @Html.TextBoxFor(m => m.Email, new {placeholder = "Email", @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.Email, null, new {@class = "help-block"})
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password)
+                                @Html.TextBoxFor(m => m.Password, new {placeholder = "Heslo", @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.Password, null, new {@class = "help-block"})
+                            </div>
+                        </div>
+               
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address)
+                                @Html.TextBoxFor(m => m.Address, new {placeholder = "Adresa", @class = "form-control"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.PhoneNumber)
+                                @Html.TextBoxFor(m => m.PhoneNumber, new {placeholder = "Telefón", @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.PhoneNumber, null, new {@class = "help-block"})
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Birthday)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Birthday, "{0:d.M.yyyy}", new {placeholder = "Datum narození", @class = "form-control date-control"})
+                                    <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                                </div>
+                                @Html.ValidationMessageFor(m => m.Birthday, null, new {@class = "help-block"})
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-default">Uložit</button>
+                            @Html.ValidationSummary(true, null, new {@class="help-block"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section JavaScriptToHead {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".date-control").datepicker({
+                 dateFormat: "d.m.yy"
+            });
+            $.datepicker.setDefaults($.datepicker.regional["cs"]);
+        });
+    </script>
+}
