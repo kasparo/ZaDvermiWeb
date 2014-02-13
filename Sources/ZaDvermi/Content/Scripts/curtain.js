@@ -60,4 +60,6 @@ function openCurtain() {
     
     $(".navbar .container").show();
     $(".logo").hide();
+
+    $('html').css('overflow', 'auto');
 }

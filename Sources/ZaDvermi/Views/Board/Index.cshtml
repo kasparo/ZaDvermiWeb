@@ -1,4 +1,5 @@
-﻿@model ZaDvermi.Models.Article
+﻿@using ZaDvermi.Models
+@model List<List<Article>>
 @{
     ViewBag.Title = "Plkárna";
     Layout = "~/Views/Shared/_CommonLayout.cshtml";
@@ -16,97 +17,18 @@
         </div>
     </div>
     <div class="row">
-        
         <!-- BOARD -->
-        <div class="col-xs-8 col-md-10">
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content 1
-                    </div>
+        <div class="col-xs-8 col-md-10 ">
+            <div class="row">
+                <div class="posts-list" data-next-index="3">
+                    @{ Html.RenderPartial("List", Model);}
                 </div>
             </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel contentasdasd 2
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content sd 3
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel success</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
+            <div class="row">
+                <div class="col-md-3 col-md-offset-5">
+                    <button type="button" class="btn btn-default next-items">
+                        Načíst další příspěvky
+                    </button>
                 </div>
             </div>
         </div>
@@ -124,8 +46,10 @@
     
     <!-- ADD ITEM on BOARD -->
     <div id="dialog-form" title="Přidat příspěvek na nástěnku">
-	  
-        
+        @using (Html.BeginForm("AddPost", "Board", FormMethod.Post, new { id = "editor-form" }))
+        {
+            @Html.TextArea("Post", new { @class = "editor" })
+        }       
     </div>
 </div>
 
@@ -135,27 +59,45 @@
         $(document).ready(function() {
             $(".create-item").click(function() {
                 $("#dialog-form").dialog("open");
+                return false;
             });
-
+            $(".next-items").click(function() {
+                var index = $(".posts-list").attr("data-next-index");
+                $.ajax({
+                    url: '@Url.Action("List", "Board")',
+                    data: { "indexFrom": index },
+                    success: function(data) {
+                        $(".posts-list").append(data);
+                        $(".posts-list").attr("data-next-index", parseInt(index) + 3);
+                        alert($(".posts-list").attr("data-next-index"));
+                    }
+                });
+                
+            });
+            $('textarea.editor').ckeditor();
         });
+
 
         $("#dialog-form").dialog({
             autoOpen: false,
-            height: 300,
-            width: 350,
+            height: 420,
+            width: 720,
             modal: true,
+            resizable: false,
             buttons: {
                 "Přidat": function() {
-                    
+                    $('#editor-form').submit();
+                    $(this).dialog("close");
                 },
                 "Zpět": function() {
                     $(this).dialog("close");
                 }
-            },
-            close: function() {
-                
             }
         });
     </script>
     	
 }
+
+
+
+

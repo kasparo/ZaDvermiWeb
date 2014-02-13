@@ -1,0 +1,22 @@
+﻿@using ZaDvermi.Models
+@model List<List<Article>>
+
+@foreach (var articleStorage in Model)
+{
+    <div class="col-xs-12 col-md-4">
+        @foreach (var article in articleStorage)
+        {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    @article.CreatedBy.FullName 
+                </h3>
+                <h6>@article.CreateDate.ToString("d.M.yyyy hh:mm")</h6>
+            </div>
+            <div class="panel-body">
+                @Html.Raw(HttpUtility.HtmlDecode(article.Content))
+            </div>
+        </div>
+        }
+    </div>
+}

@@ -77,6 +77,7 @@ namespace ZaDvermi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "ID, FirstName, LastName, NickName, Email, Password, Address, PhoneNumber, Birthday")]User user)
         {
             if (this.ModelState.IsValid)
