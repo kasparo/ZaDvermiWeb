@@ -1,4 +1,5 @@
 ﻿@using ZaDvermi.Models
+@using ZaDvermi.Common
 @model List<List<Article>>
 @{
     ViewBag.Title = "Plkárna";
@@ -7,9 +8,9 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-md-2" style="margin-bottom: 15px">
-            <div class="col-xs-6 col-md-4">
-                <button type="button" class="btn btn-primary create-item">
+        <div class="col-xs-12 col-md-2" style="margin-bottom: 15px;padding-left: 0">
+            <div class="col-xs-6 col-md-4" >
+                <button type="button" class="btn btn-primary create-item-board">
                     <span class="glyphicon glyphicon-plus"></span>
                     Přidat příspěvek
                 </button>
@@ -18,38 +19,95 @@
     </div>
     <div class="row">
         <!-- BOARD -->
-        <div class="col-xs-8 col-md-10 ">
-            <div class="row">
-                <div class="posts-list" data-next-index="3">
-                    @{ Html.RenderPartial("List", Model);}
+        <div class="col-xs-8 col-md-9 left-panel">
+            
+                <div class="row">
+                    <div class="posts-list" data-next-index="15">
+                        @{ Html.RenderPartial("List", Model);}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 col-md-offset-5">
-                    <button type="button" class="btn btn-default next-items">
-                        Načíst další příspěvky
-                    </button>
+               
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-5">
+                        <button type="button" class="btn btn-default next-items">
+                            Načíst další příspěvky
+                        </button>
+                    </div>
                 </div>
-            </div>
+            
         </div>
        
         <!-- ALERTS and NOTIFICATIONS -->
-        <div class="col-xs-4 col-md-2">
-            <div class="alert alert-dismissable alert-danger">
-                Pozor, pozor, zkouška ve škole!
+        <div class="col-xs-4 col-md-3 notifications-panel" >
+            <div class="well">
+                @foreach(var post in Model[3])
+                {
+                    <div class="alert alert-danger">
+                        @Html.Raw(HttpUtility.HtmlDecode(post.Content))
+
+                       
+                        @if (Html.IsAccessible("Administrator", "Manager"))
+                        {
+                            <div style="text-align: right">
+                                <a href="@Url.Action("Delete", "Board", new { id = post.Id })" class="delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                            </div>
+                        }
+                    </div>
+                }
+                @if (Html.IsAccessible("Administrator", "Manager"))
+                {
+                    <button type="button" class="btn btn-primary create-item-notification">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                }
             </div>
-            <button type="button" class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
         </div>
     </div>
     
     <!-- ADD ITEM on BOARD -->
-    <div id="dialog-form" title="Přidat příspěvek na nástěnku">
-        @using (Html.BeginForm("AddPost", "Board", FormMethod.Post, new { id = "editor-form" }))
+    <div id="dialog-form-board" title="Přidat příspěvek na nástěnku">
+        @if (Html.IsAccessible("Administrator", "Manager"))
         {
-            @Html.TextArea("Post", new { @class = "editor" })
-        }       
+            using (Html.BeginForm("AddPost", "Board", FormMethod.Post, new { id = "editor-form-board" }))
+            {
+                @Html.TextArea("Post", new { @class = "editor" })
+            }       
+        }
+    </div>
+
+    <!-- ADD ITEM on NOTIFICATIONS -->
+    <div id="dialog-form-notification" title="Přidat upozornění">
+        @if (Html.IsAccessible("Administrator", "Manager"))
+        {
+            using (Html.BeginForm("AddNotification", "Board", FormMethod.Post, new { id = "editor-form-notification" }))
+            {
+               
+                @Html.TextArea("Post", new { @class = "editor" })
+               
+                <div class="row" style="margin: 5px 0">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Platnost Od")
+                            <div class="input-group">
+                                @Html.TextBox("ValidFrom", DateTime.Now, "{0:d.M.yyyy}", new { @class = "form-control date-control"})
+                                <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Platnost Do")
+                            <div class="input-group">
+                                @Html.TextBox("ValidTo", DateTime.Now.AddDays(7), "{0:d.M.yyyy}", new { @class = "form-control date-control"})
+                                <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }    
+               
+        }
     </div>
 </div>
 
@@ -57,42 +115,84 @@
 {
     <script type="text/javascript">
         $(document).ready(function() {
-            $(".create-item").click(function() {
-                $("#dialog-form").dialog("open");
+            $(".create-item-board").click(function () {
+                $("#dialog-form-board").dialog("open");
                 return false;
             });
+            $(".create-item-notification").click(function () {
+                $("#dialog-form-notification").dialog("open");
+                return false;
+            });
+
             $(".next-items").click(function() {
                 var index = $(".posts-list").attr("data-next-index");
                 $.ajax({
                     url: '@Url.Action("List", "Board")',
                     data: { "indexFrom": index },
-                    success: function(data) {
-                        $(".posts-list").append(data);
-                        $(".posts-list").attr("data-next-index", parseInt(index) + 3);
-                        alert($(".posts-list").attr("data-next-index"));
+                    cache: false,
+                    success: function (response) {
+                        for (var i = 1; i <= 3; i++) {
+                            var panels = $(response).find("div[data-panel-number='" + i + "']");
+                            var container = $(".posts-list").find("div[data-container-number='" + i + "']");
+                            container.append(panels);
+                        }
+                        $(".posts-list").attr("data-next-index", parseInt(index) + 15);
+                       
                     }
                 });
                 
             });
-            $('textarea.editor').ckeditor();
-        });
 
-
-        $("#dialog-form").dialog({
-            autoOpen: false,
-            height: 420,
-            width: 720,
-            modal: true,
-            resizable: false,
-            buttons: {
-                "Přidat": function() {
-                    $('#editor-form').submit();
-                    $(this).dialog("close");
-                },
-                "Zpět": function() {
-                    $(this).dialog("close");
+            $(".delete-button").click(function () {
+                if (confirm('Vymazat příspěvek?')) {
+                    return true;
                 }
-            }
+                return false;
+            });
+
+            // html editor
+            $('textarea.editor').ckeditor();
+
+            // date controls
+            $(".date-control").datepicker({
+                dateFormat: "d.m.yy"
+            });
+            $.datepicker.setDefaults($.datepicker.regional["cs"]);
+       
+
+            $("#dialog-form-board").dialog({
+                autoOpen: false,
+                height: 420,
+                width: 720,
+                modal: true,
+                resizable: false,
+                buttons: {
+                    "Přidat": function () {
+                        $('#editor-form-board').submit();
+                        $(this).dialog("close");
+                    },
+                    "Zpět": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        
+            $("#dialog-form-notification").dialog({
+                autoOpen: false,
+                height: 500,
+                width: 720,
+                modal: true,
+                resizable: false,
+                buttons: {
+                    "Přidat": function () {
+                        $('#editor-form-notification').submit();
+                        $(this).dialog("close");
+                    },
+                    "Zpět": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
         });
     </script>
     	

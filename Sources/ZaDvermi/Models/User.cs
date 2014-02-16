@@ -40,9 +40,11 @@ namespace ZaDvermi.Models
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
-        [Required(ErrorMessage = "Heslo je povinná položka")]
         [Display(Name = "Heslo")]
         public string Password { get; set; }
+
+        [Display(Name="Oblíbená barva")]
+        public string Color { get; set; }
 
         public DateTime LastActivity { get; set; }
 
@@ -51,8 +53,9 @@ namespace ZaDvermi.Models
             get { return String.Format("{0} {1}", FirstName, LastName); }
         }
 
-        public ICollection<MemberShip> MemberShips { get; set; }
-        public ICollection<MediaItem> MediaItems { get; set; } 
+        public virtual ICollection<MemberShip> MemberShips { get; set; }
+        
+      
     }
 
     public class UserLogin

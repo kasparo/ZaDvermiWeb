@@ -45,9 +45,21 @@ namespace ZaDvermi.Security
                 return null;
             }
 
+            _database.Configuration.ValidateOnSaveEnabled = false;
             user.LastActivity = DateTime.Now;
-            _database.SaveChanges();
+            _database.Entry(user).Property(x => x.LastActivity).IsModified = true;
 
+            _database.SaveChanges();
+            _database.Configuration.ValidateOnSaveEnabled = true;
+
+            HttpContext.Current.Session["CurrentUser"] = user;
+
+            return user;
+        }
+
+        public static User GetStoredUser()
+        {
+            var user = HttpContext.Current.Session["CurrentUser"] as User;
             return user;
         }
 
@@ -68,5 +80,6 @@ namespace ZaDvermi.Security
 
             }
         }
+
     }
 }

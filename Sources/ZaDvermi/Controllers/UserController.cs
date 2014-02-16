@@ -43,7 +43,7 @@ namespace ZaDvermi.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Board");
                 }
             }
             this.ModelState.AddModelError("", "Chybný email nebo heslo");
@@ -78,17 +78,51 @@ namespace ZaDvermi.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "ID, FirstName, LastName, NickName, Email, Password, Address, PhoneNumber, Birthday")]User user)
+        public ActionResult Edit([Bind(Include = "ID, FirstName, LastName, NickName, Email, Password, Address, PhoneNumber, Birthday, Color")]User user)
         {
             if (this.ModelState.IsValid)
             {
                 Database.Entry(user).State = EntityState.Modified;
+                if (String.IsNullOrEmpty(user.Password))
+                    Database.Entry(user).Property(x => x.Password).IsModified = false;
                 Database.Entry(user).Property(x => x.LastActivity).IsModified = false;
                 Database.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Board");
             }
             return View(user);
+        }
+
+        [Authorize]
+        public ActionResult List()
+        {
+            return View(GetUsers());
+        }
+
+        [Authorize(Roles="Administrator")]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = UserProvider.GetUser(id.Value);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            Database.Users.Remove(user);
+            Database.SaveChanges();
+
+            return View("List", GetUsers());
+        }
+
+        private List<User> GetUsers()
+        {
+            var users = from u in Database.Users
+                        orderby u.LastName
+                        select u;
+            return users.ToList();
         }
 
     }

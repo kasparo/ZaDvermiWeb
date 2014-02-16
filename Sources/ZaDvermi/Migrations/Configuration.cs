@@ -29,31 +29,7 @@ namespace ZaDvermi.Migrations
             userGroups.ForEach(s => context.UserGroups.Add(s));
             context.SaveChanges();
 
-            // Features
-            var features = new List<Feature>
-                {
-                    new Feature() {FeatureKey = "AA", Description = "mazaní pøíspìvkù na nástìnce"}
-                };
-            context.SaveChanges();
-
-            // Rights
-            var rights = new List<Right>()
-                {
-                    new Right()
-                        {
-                            Feature = features.Single(g => g.FeatureKey == "AA"),
-                            UserGroup = userGroups.Single(g => g.Name == "Administrator")
-                        },
-                    new Right()
-                        {
-                            Feature = features.Single(g => g.FeatureKey == "AA"),
-                            UserGroup = userGroups.Single(g => g.Name == "Manager")
-                        }
-
-
-                };
-            rights.ForEach(r => context.Rights.Add(r));
-            context.SaveChanges();
+          
         }
     }
 }

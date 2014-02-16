@@ -26,7 +26,7 @@
 }
 
 .navbar .container {
-    display: none;
+    
     background-color: rgba(255,95,1,.4); 
 }
 
@@ -116,4 +116,31 @@ footer {
     top: 50px;
     left: 70%;
     z-index: 4;
+}
+
+/* BOARD */
+.posts-list .insert-date {
+    font-size: x-small;
+}
+
+
+.posts-list .panel-footer {
+    padding: 5px 15px;
+}
+
+.posts-list .panel-footer a {
+    float: right;
+}
+
+.next-items {
+    margin: 15px 5px;
+}
+
+.notifications-panel {
+    
+}
+
+.notifications-panel .alert {
+    padding: 10px 9px;
+  
 }

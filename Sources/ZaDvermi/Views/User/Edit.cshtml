@@ -1,4 +1,5 @@
-﻿@model ZaDvermi.Models.User
+﻿@using System.Web.Optimization
+@model ZaDvermi.Models.User
 
 @{
     ViewBag.Title = "Detail divadelníka";
@@ -51,7 +52,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Password)
-                                @Html.TextBoxFor(m => m.Password, new {placeholder = "Heslo", @class = "form-control"})
+                                @Html.PasswordFor(m => m.Password, new {placeholder = "Heslo", @class = "form-control"})
                                 @Html.ValidationMessageFor(m => m.Password, null, new {@class = "help-block"})
                             </div>
                         </div>
@@ -84,6 +85,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Color)
+                                @Html.TextBoxFor(m=>m.Color, new { @class = "form-control color-picker" })
+                                
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -105,6 +115,17 @@
                  dateFormat: "d.m.yy"
             });
             $.datepicker.setDefaults($.datepicker.regional["cs"]);
+
+
+            $('.color-picker').minicolors({
+                control: "saturation",
+                defaultValue: "#FF6A00",
+                inline: false,
+                letterCase: 'uppercase',
+                opacity: false,
+                position: 'bottom left',
+                theme: 'bootstrap'
+            });
         });
     </script>
 }

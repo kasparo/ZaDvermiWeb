@@ -21,14 +21,16 @@ namespace ZaDvermi
                 "~/Content/Scripts/jquery.ui.datepicker-cs-CZ.min.js",
                 "~/Content/Scripts/curtain.js",
                 "~/ckeditor/ckeditor.js",
+                "~/Content/Scripts/jquery.minicolors.min.js",
                 "~/ckeditor/adapters/jquery.js");
             commonBundle.Orderer = new BundlesOrder();
             bundles.Add(commonBundle);
-
+            
             // css
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/Content/Styles/bootstrap.css",
                 "~/Content/Styles/jquery-ui-1.10.0.custom.css",
+                "~/Content/Styles/jquery.minicolors.css",
                 "~/Content/Styles/custom.css"));
         }
     }

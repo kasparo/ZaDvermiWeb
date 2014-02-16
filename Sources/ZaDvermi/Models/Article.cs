@@ -9,7 +9,9 @@ namespace ZaDvermi.Models
     {
         PhotoAlbum = 1,
         Board = 2,
-        PublicArticle = 3
+        PublicArticle = 3,
+        PrivateNotification = 4
+       
     }
 
     public class Article
@@ -43,7 +45,7 @@ namespace ZaDvermi.Models
         public DateTime? ValidTo { get; set; }
 
 
-        public ICollection<ArticleMedia> ArticleMedias { get; set; }
+        public virtual ICollection<ArticleMedia> ArticleMedias { get; set; }
         public virtual Article ParentArticle { get; set; }
         public virtual User CreatedBy { get; set; }
     }

@@ -1,0 +1,56 @@
+﻿@using ZaDvermi.Common
+@model List<ZaDvermi.Models.User>
+
+@{
+    ViewBag.Title = "Seznam divadelníků";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach(var user in Model)
+        {
+            <div class="col-md-12">
+                <div class="panel panel-default" style="border-color: @user.Color">
+                    <div class="panel-heading" style="background-color: @user.Color">
+                        <div class="row">
+                            <div class="col-md-10" >
+                                <h3 class="panel-title">
+                                    @Html.Raw(HttpUtility.HtmlDecode(String.Format("<b>{0}</b> alias <b>{1}</b>", user.FullName, user.NickName)))
+                                </h3>
+                            </div>
+                            <div class="col-md-2" >
+                                @if (Html.IsAccessible("Administrator"))
+                                {
+                                    <a href="@Url.Action("Delete", "User", new { id = user.Id })" class="delete-button"><span class="glyphicon glyphicon-trash"></span> Odtsranit</a>
+                                }
+                                @if (Html.IsAccessible("Administrator", "Manager"))
+                                {
+                                    <a href="@Url.Action("Edit", "User", new { id = user.Id })"><span class="glyphicon glyphicon-wrench"></span> Upravit</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-2"><span class="glyphicon glyphicon-phone-alt"></span> @user.PhoneNumber</div>
+                        <div class="col-md-2"><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:@user.Email">@user.Email</a></div>
+                        <div class="col-md-5"><span class="glyphicon glyphicon-home"></span> @user.Address</div>
+                        <div class="col-md-3">Datum narození: @user.Birthday.ToString("d.M.yyyy") </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section JavaScriptToHead
+{
+    <script type="text/javascript">
+        $(".delete-button").click(function () {
+            if (confirm('Vymazat uživatel?')) {
+                return true;
+            }
+            return false;
+        });
+    </script>
+}

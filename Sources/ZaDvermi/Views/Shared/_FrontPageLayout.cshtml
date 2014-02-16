@@ -18,3 +18,18 @@
 <div class="body-wrapper">
     @RenderBody()
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($.cookie("curtain.state")) {
+                if ($.cookie("curtain.state") == 'closed')
+                    $(".navbar .container").hide();
+            } else {
+                $(".navbar .container").hide();
+            }
+            
+        });
+    </script>
+}

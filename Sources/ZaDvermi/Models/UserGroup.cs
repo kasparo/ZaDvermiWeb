@@ -13,8 +13,7 @@ namespace ZaDvermi.Models
         [StringLength(100)]
         public string Description { get; set; }
 
-        public ICollection<MemberShip> MemberShips { get; set; }
-        public ICollection<Right> Rights { get; set; } 
-
+        public virtual ICollection<MemberShip> MemberShips { get; set; }
+       
     }
 }

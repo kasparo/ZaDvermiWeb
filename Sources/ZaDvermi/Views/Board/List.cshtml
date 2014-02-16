@@ -1,20 +1,29 @@
 ﻿@using ZaDvermi.Models
+@using ZaDvermi.Common
+@using ZaDvermi.Security
 @model List<List<Article>>
 
-@foreach (var articleStorage in Model)
+@for(int index = 1; index <= 3; index++)
 {
-    <div class="col-xs-12 col-md-4">
+    var articleStorage = Model[index - 1];
+    <div class="col-xs-12 col-md-4" data-container-number="@index">
         @foreach (var article in articleStorage)
         {
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="panel panel-default" data-panel-number="@index" style="border-color: @article.CreatedBy.Color">
+            <div class="panel-heading" style="background-color: @article.CreatedBy.Color">
                 <h3 class="panel-title">
-                    @article.CreatedBy.FullName 
+                    @article.CreatedBy.NickName 
                 </h3>
-                <h6>@article.CreateDate.ToString("d.M.yyyy hh:mm")</h6>
             </div>
             <div class="panel-body">
                 @Html.Raw(HttpUtility.HtmlDecode(article.Content))
+            </div>
+            <div class="panel-footer">
+                <span class="insert-date">@article.CreateDate.ToString("d.M.yyyy HH:mm")</span>
+                @if (Html.IsAccessible("Administrator", "Manager"))
+                {
+                    <a href="@Url.Action("Delete", "Board", new { id = article.Id })" class="delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                }
             </div>
         </div>
         }
