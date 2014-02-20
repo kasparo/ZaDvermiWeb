@@ -20,13 +20,13 @@
                                 </h3>
                             </div>
                             <div class="col-md-2" >
-                                @if (Html.IsAccessible("Administrator"))
-                                {
-                                    <a href="@Url.Action("Delete", "User", new { id = user.Id })" class="delete-button"><span class="glyphicon glyphicon-trash"></span> Odtsranit</a>
-                                }
                                 @if (Html.IsAccessible("Administrator", "Manager"))
                                 {
-                                    <a href="@Url.Action("Edit", "User", new { id = user.Id })"><span class="glyphicon glyphicon-wrench"></span> Upravit</a>
+                                    <a href="@Url.Action("Edit", "User", new { id = user.Id })" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-wrench"></span> Upravit</a>
+                                }
+                                @if (Html.IsAccessible("Administrator"))
+                                {
+                                    <a href="@Url.Action("Delete", "User", new { id = user.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span> Odtsranit</a>
                                 }
                             </div>
                         </div>
@@ -47,7 +47,7 @@
 {
     <script type="text/javascript">
         $(".delete-button").click(function () {
-            if (confirm('Vymazat uživatel?')) {
+            if (confirm('Opravdu chcete vymazat uživatel?')) {
                 return true;
             }
             return false;

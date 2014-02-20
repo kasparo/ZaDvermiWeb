@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ZaDvermi.Models
@@ -29,6 +30,8 @@ namespace ZaDvermi.Models
         public DateTime CreateDate { get; set; }
         
         public virtual User CreatedBy { get; set; }
+
+        public virtual ICollection<ArticleMedia> ArticleMedias { get; set; }
 
     }
 }

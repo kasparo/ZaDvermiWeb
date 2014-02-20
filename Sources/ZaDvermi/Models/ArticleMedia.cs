@@ -12,7 +12,7 @@ namespace ZaDvermi.Models
         public int ArticleId { get; set; }
 
         [Required]
-        public int MediaId { get; set; }
+        public int MediaItemId { get; set; }
 
         [StringLength(60)]
         public string Title { get; set; }

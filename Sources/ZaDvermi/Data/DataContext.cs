@@ -9,7 +9,8 @@ namespace ZaDvermi.Data
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<MemberShip> MemberShips { get; set; }
         public DbSet<Article> Articles { get; set; }
-        public DbSet<MediaItem> MediaItems { get; set; } 
+        public DbSet<MediaItem> MediaItems { get; set; }
+        public DbSet<ArticleMedia> ArticleMedias { get; set; }
 
         public DataContext() : base("ZaDvermiDatabase")
         {

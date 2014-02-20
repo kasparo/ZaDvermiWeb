@@ -22,7 +22,7 @@
                 <span class="insert-date">@article.CreateDate.ToString("d.M.yyyy HH:mm")</span>
                 @if (Html.IsAccessible("Administrator", "Manager"))
                 {
-                    <a href="@Url.Action("Delete", "Board", new { id = article.Id })" class="delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="@Url.Action("Delete", "Board", new { id = article.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
                 }
             </div>
         </div>

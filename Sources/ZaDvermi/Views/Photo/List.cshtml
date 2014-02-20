@@ -1,0 +1,33 @@
+﻿@using ZaDvermi.Common
+@model List<ZaDvermi.Models.MediaItem>
+
+
+<div id="links">
+    @foreach (var photo in Model)
+    {
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body" style="text-align: center">
+                    <a href="@Url.Action("Download", "File", new {id = photo.Id})" title="@photo.FileName" data-gallery>
+                        <img src="@Url.Action("Download", "File", new {id = photo.Id, thumb = true})" alt="@photo.OriginialFileName">
+                    </a>
+                </div>
+                @if (Html.IsAccessible("Administrator", "Manager", "Editor"))
+                {
+                    <div class="panel-footer"><a href="@Url.Action("Delete", "Photo", new {id = photo.Id})" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a></div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+

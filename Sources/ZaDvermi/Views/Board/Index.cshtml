@@ -1,4 +1,5 @@
-﻿@using ZaDvermi.Models
+﻿@using System.Web.Optimization
+@using ZaDvermi.Models
 @using ZaDvermi.Common
 @model List<List<Article>>
 @{
@@ -8,60 +9,66 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-md-2" style="margin-bottom: 15px;padding-left: 0">
+        <div class="col-xs-12 col-md-6" style="margin-bottom: 15px;padding-left: 0">
             <div class="col-xs-6 col-md-4" >
                 <button type="button" class="btn btn-primary create-item-board">
-                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="glyphicon glyphicon-comment"></span>
                     Přidat příspěvek
                 </button>
+               
             </div>
+            @if (Html.IsAccessible("Administrator", "Manager"))
+            {
+                <div class="col-xs-6 col-md-4" >
+                    <button type="button" class="btn btn-warning create-item-notification">
+                        <span class="glyphicon glyphicon-info-sign"></span> 
+                        Přidat oznámení
+                    </button>
+                </div>
+            }
         </div>
     </div>
     <div class="row">
         <!-- BOARD -->
-        <div class="col-xs-8 col-md-9 left-panel">
-            
-                <div class="row">
-                    <div class="posts-list" data-next-index="15">
-                        @{ Html.RenderPartial("List", Model);}
-                    </div>
+        <div class="col-xs-8 @(Model[3].Count > 0 ? "col-md-9" : "col-md-12") left-panel">
+            <div class="row">
+                <div class="posts-list" data-next-index="15">
+                    @{ Html.RenderPartial("List", Model);}
                 </div>
+            </div>
                
-                <div class="row">
-                    <div class="col-md-3 col-md-offset-5">
-                        <button type="button" class="btn btn-default next-items">
-                            Načíst další příspěvky
-                        </button>
-                    </div>
-                </div>
-            
-        </div>
-       
-        <!-- ALERTS and NOTIFICATIONS -->
-        <div class="col-xs-4 col-md-3 notifications-panel" >
-            <div class="well">
-                @foreach(var post in Model[3])
-                {
-                    <div class="alert alert-danger">
-                        @Html.Raw(HttpUtility.HtmlDecode(post.Content))
-
-                       
-                        @if (Html.IsAccessible("Administrator", "Manager"))
-                        {
-                            <div style="text-align: right">
-                                <a href="@Url.Action("Delete", "Board", new { id = post.Id })" class="delete-button"><span class="glyphicon glyphicon-trash"></span></a>
-                            </div>
-                        }
-                    </div>
-                }
-                @if (Html.IsAccessible("Administrator", "Manager"))
-                {
-                    <button type="button" class="btn btn-primary create-item-notification">
-                        <span class="glyphicon glyphicon-plus"></span>
+            <div class="row">
+                <div class="col-md-3 col-md-offset-5">
+                    <button type="button" class="btn btn-default next-items">
+                        Načíst další příspěvky
                     </button>
-                }
+                </div>
             </div>
         </div>
+       
+        @if (Model[3].Count > 0)
+        {
+            <!-- ALERTS and NOTIFICATIONS -->
+            <div class="col-xs-4 col-md-3 notifications-panel" >
+                <div class="well">
+                    @foreach (var post in Model[3])
+                    {
+                        <div class="alert alert-danger">
+                            @Html.Raw(HttpUtility.HtmlDecode(post.Content))
+
+                       
+                            @if (Html.IsAccessible("Administrator", "Manager"))
+                            {
+                                <div style="text-align: right">
+                                    <a href="@Url.Action("Delete", "Board", new {id = post.Id})" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                                </div>
+                            }
+                        </div>
+                    }
+                   
+                </div>
+            </div>
+        }
     </div>
     
     <!-- ADD ITEM on BOARD -->
@@ -111,6 +118,11 @@
     </div>
 </div>
 
+@section Plugins
+{
+    @Scripts.Render("~/bundles/ckeditor")
+}
+
 @section JavaScriptToHead
 {
     <script type="text/javascript">
@@ -144,7 +156,7 @@
             });
 
             $(".delete-button").click(function () {
-                if (confirm('Vymazat příspěvek?')) {
+                if (confirm('Opravdu chceš vymazat příspěvek?')) {
                     return true;
                 }
                 return false;

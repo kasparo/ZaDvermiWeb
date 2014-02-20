@@ -52,7 +52,8 @@ namespace ZaDvermi.Security
             _database.SaveChanges();
             _database.Configuration.ValidateOnSaveEnabled = true;
 
-            HttpContext.Current.Session["CurrentUser"] = user;
+            if (HttpContext.Current.Session != null)
+                HttpContext.Current.Session["CurrentUser"] = user;
 
             return user;
         }

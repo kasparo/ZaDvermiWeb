@@ -1,0 +1,84 @@
+﻿@using System.Web.Optimization
+@using ZaDvermi.Common
+@model List<ZaDvermi.Models.Article>
+@{
+   
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row page-header">
+        <div class="col-xs-12 col-md-2" >
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Vyberte album
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    @foreach (var album in Model)
+                    {
+                        <li><a href="#" class="album-link" data-id="@album.Id" data-title="@album.Title" data-description="@album.Content">@album.Title</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 album-title">
+                
+        </div>
+        @if (Html.IsAccessible("Administrator", "Manager"))
+        {
+            <div class="col-xs-12 col-md-4" >
+                <p><a href="@Url.Action("Add", "Photo")" class="btn btn-primary btn-xs">
+                       <span class="glyphicon glyphicon-book"></span>
+                       Vytvořit nové album
+                   </a>
+                    </p>
+                <div class="add-pictures-button" >
+               
+                </div>
+                
+            </div>
+            
+        }
+    </div>
+    <div class="row " style="margin-top: 20px" >
+        <div class="col-md-12 photo-conatainer">
+            
+        </div>
+    </div>
+</div>
+
+
+
+@section Plugins
+{
+    @Scripts.Render("~/bundles/imagegallery")
+}
+
+@section JavaScriptToHead {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.album-link').click(function() {
+                var id = $(this).data("id");
+                var url = '@Url.Action("Add", "Photo")' + "/" + id;
+
+                var link = '<p><a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-picture"></span> Přidat fotografie do alba</a></p>';
+                link = link.replace("#", url);
+                $(".add-pictures-button").empty().append(link);
+
+                var albumTitle = '<h3 style="margin-top: 4px">' + $(this).data("title") + '</h3><p>' + $(this).data("description") + '</p>';
+                $(".album-title").empty().append(albumTitle);
+
+                var urlDelete = '@Url.Action("DeleteAlbum", "Photo")' + "/" + id;
+                var linkDelete = '<p><a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span> Odstranit album</a></p>';
+                linkDelete = linkDelete.replace("#", urlDelete);
+                $(".add-pictures-button").append(linkDelete);
+
+                // load images
+                $('.photo-conatainer').load('@Url.Action("List", "Photo")', { id: id });
+            });
+            $('.album-link').first().click();
+        });        
+      
+    </script>
+}
