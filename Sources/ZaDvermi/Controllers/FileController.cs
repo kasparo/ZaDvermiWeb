@@ -16,17 +16,22 @@ namespace ZaDvermi.Controllers
     {
         #region Private Properties
 
-        private string StorageRoot
+        private string StorageRoot(MediaType type)
         {
-            get { return Path.Combine(Server.MapPath("~/App_Data/Pictures")); }
+            if (type == MediaType.Photo)
+                return Path.Combine(Server.MapPath("~/App_Data/Pictures"));
+
+            return Path.Combine(Server.MapPath("~/App_Data/Documents"));
         }
 
         #endregion
 
         [HttpPost]
         [Authorize]
-        public ActionResult Upload()
+        public ActionResult Upload(MediaType? type)
         {
+            MediaType mediaType = type != null ? type.Value : MediaType.Photo;
+
             var statuses = new List<FileDto>();
             var httpRequest = Request;
             foreach (var file in httpRequest.Files)
@@ -34,11 +39,11 @@ namespace ZaDvermi.Controllers
                 var headers = httpRequest.Headers;
                 if (string.IsNullOrEmpty(headers["X-File-Name"]))
                 {
-                    UploadWholeFile(httpRequest, statuses);
+                    UploadWholeFile(httpRequest, statuses, mediaType);
                 }
                 else
                 {
-                    UploadPartialFile(headers["X-File-Name"], httpRequest, statuses);
+                    UploadPartialFile(headers["X-File-Name"], httpRequest, statuses, mediaType);
                 }
 
                 // database
@@ -48,7 +53,7 @@ namespace ZaDvermi.Controllers
                         {
                             CreateDate = DateTime.Now,
                             CreatedById = UserProvider.GetCurrentUser().Id,
-                            MediaType = MediaType.Photo,
+                            MediaType = mediaType,
                             OriginialFileName = status.name,
                             FileName = status.name
                         };
@@ -59,12 +64,12 @@ namespace ZaDvermi.Controllers
                     status.url += String.Format("/{0}", mediaItem.Id);
                     status.deleteUrl += String.Format("/{0}", mediaItem.Id);
                 }
-                
-                var returnObject = new { files = statuses };
+
+                var returnObject = new {files = statuses};
                 return Json(returnObject);
             }
-            var emptyResult = new { files = statuses };
-            return Json(emptyResult); 
+            var emptyResult = new {files = statuses};
+            return Json(emptyResult);
         }
 
         [HttpGet]
@@ -76,7 +81,7 @@ namespace ZaDvermi.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            var filePath = Path.Combine(StorageRoot, mediaItem.FileName);
+            var filePath = Path.Combine(StorageRoot(mediaItem.MediaType), mediaItem.FileName);
             if (!System.IO.File.Exists(filePath))
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
@@ -111,7 +116,7 @@ namespace ZaDvermi.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            var filePath = Path.Combine(StorageRoot, mediaItem.FileName);
+            var filePath = Path.Combine(StorageRoot(mediaItem.MediaType), mediaItem.FileName);
             if (System.IO.File.Exists(filePath))
                 System.IO.File.Delete(filePath);
 
@@ -122,7 +127,7 @@ namespace ZaDvermi.Controllers
         }
 
         #region Private
-        private void UploadPartialFile(string fileName, HttpRequestBase request, List<FileDto> statuses)
+        private void UploadPartialFile(string fileName, HttpRequestBase request, List<FileDto> statuses, MediaType type)
         {
             if (request.Files.Count != 1)
                 throw new HttpRequestValidationException(
@@ -130,7 +135,7 @@ namespace ZaDvermi.Controllers
             var file = request.Files[0];
             var inputStream = file.InputStream;
 
-            var fullName = Path.Combine(StorageRoot, Path.GetFileName(fileName));
+            var fullName = Path.Combine(StorageRoot(type), Path.GetFileName(fileName));
 
             using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
             {
@@ -152,18 +157,18 @@ namespace ZaDvermi.Controllers
                     type = file.ContentType,
                     url = Url.Action("Download", "File"),
                     deleteUrl = Url.Action("Delete", "File"),
-                    thumbnailUrl = @"data:image/png;base64," + EncodeFile(fullName),
+                    thumbnailUrl = type == MediaType.Photo ? @"data:image/png;base64," + EncodeFile(fullName) : string.Empty,
                     deleteType = "GET",
                 });
         }
 
-        private void UploadWholeFile(HttpRequestBase request, List<FileDto> statuses)
+        private void UploadWholeFile(HttpRequestBase request, List<FileDto> statuses, MediaType type)
         {
             for (int i = 0; i < request.Files.Count; i++)
             {
                 var file = request.Files[i];
 
-                var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
+                var fullPath = Path.Combine(StorageRoot(type), Path.GetFileName(file.FileName));
 
                 file.SaveAs(fullPath);
 
@@ -174,7 +179,7 @@ namespace ZaDvermi.Controllers
                         type = file.ContentType,
                         url = Url.Action("Download", "File"),
                         deleteUrl = Url.Action("Delete", "File"),
-                        thumbnailUrl = @"data:image/png;base64," + EncodeFile(fullPath),
+                        thumbnailUrl = type == MediaType.Photo ? @"data:image/png;base64," + EncodeFile(fullPath) : string.Empty,
                         deleteType = "GET",
                     });
             }

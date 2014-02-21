@@ -10,8 +10,8 @@ namespace ZaDvermi.Models
         PhotoAlbum = 1,
         Board = 2,
         PublicArticle = 3,
-        PrivateNotification = 4
-       
+        PrivateNotification = 4,
+        Performance = 5
     }
 
     public class Article

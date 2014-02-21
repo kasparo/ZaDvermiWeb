@@ -1,0 +1,45 @@
+﻿
+@using ZaDvermi.Common
+@model List<ZaDvermi.Models.Article>
+
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 id="nav-tabs">Představení</h2>
+                </div>
+                <div class="col-md-4">
+                    @if (Html.IsAccessible("Administrator", "Manager"))
+                    {
+                        <a href="@Url.Action("Add", "Performance")" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Přidat představení
+                        </a>
+                    }
+                </div>
+            </div>
+            <div>
+                <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+                    <li class="active"><a href="#plan" data-toggle="tab">Plánovaná</a></li>
+                    <li class=""><a href="#history" data-toggle="tab">Za námi</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="plan">
+                        <p>Na tato představení se pylně připravujeme a chystáme - opakujeme si texty, ladíme scénu a přešíváme kostýmy. Budeme rádi, když se nás přijdete podívat.</p>
+                    </div>
+                    <div class="tab-pane fade" id="history">
+                        <p>Toto je již za námi. Všude, kde jsme byli, nás čekalo skvělé publikum. Bez diváků by to, co děláme, nedávalo žádný smyle. Děkjume.</p>
+                    </div>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -133,6 +133,7 @@
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PerformanceController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\DataContext.cs" />
@@ -414,6 +415,9 @@
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\Add.cshtml" />
     <Content Include="Views\Photo\List.cshtml" />
+    <Content Include="Views\Performance\Index.cshtml" />
+    <Content Include="Views\Shared\PhotoSelector.cshtml" />
+    <Content Include="Views\Performance\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401240850073_Init.resx">

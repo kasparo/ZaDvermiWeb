@@ -1,0 +1,93 @@
+﻿@using System.Web.Optimization
+@model ZaDvermi.Models.Article
+
+@{
+   
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+@using (Html.BeginForm("Add", "Performance",
+                       FormMethod.Post,
+                       new {role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Místo")
+                                @Html.TextBoxFor(m => m.Title, new {@class = "form-control"})
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Datum")
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.ValidFrom, "{0:d.M.yyyy}", new {@class = "form-control date-control"})
+                                    <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label("Popis")
+                                @Html.TextAreaFor(m => m.Content, new {@class = "form-control editor", id="editorA"})
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label("Fotografie")
+                                @{ Html.RenderAction("PhotoSelector"); }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-default">Uložit</button>
+                            <a href="@Url.Action("Index", "Performance")" class="btn btn-default">
+                                Zpět
+                            </a>
+                            @Html.ValidationSummary(true, null, new {@class = "help-block"})
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+    </div>
+}
+
+@section Plugins
+{
+    @Scripts.Render("~/bundles/ckeditor")
+}
+
+@section JavaScriptToHead
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // html editor
+            $('textarea.editor').ckeditor({
+                height: '100px'
+            });
+            
+           
+
+            // date controls
+            $(".date-control").datepicker({
+                dateFormat: "d.m.yy"
+            });
+            $.datepicker.setDefaults($.datepicker.regional["cs"]);
+        });
+    </script>
+    	
+}
+
+

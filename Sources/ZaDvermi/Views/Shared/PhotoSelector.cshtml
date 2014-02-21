@@ -1,0 +1,17 @@
+﻿@model List<ZaDvermi.Models.MediaItem>
+
+<div>
+   @foreach (var photo in Model)
+   {
+       <div class="col-md-3" style="height: 160px">
+           <div class="panel panel-default">
+               <div class="panel-body" style="text-align: center">
+                   <a href="#" title="@photo.FileName">
+                       <img src="@Url.Action("Download", "File", new {id = photo.Id, thumb = true})" alt="@photo.FileName">
+                   </a>
+               </div>
+           </div>
+        </div>
+   }
+</div>
+
