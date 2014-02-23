@@ -30,7 +30,7 @@ namespace ZaDvermi.Security
             return true;
         }
 
-        public User GetCurrentUser()
+        public User GetCurrentUser(bool setActivity)
         {
             IPrincipal userPrincipal = HttpContext.Current.User;
             if (!userPrincipal.Identity.IsAuthenticated)
@@ -45,12 +45,15 @@ namespace ZaDvermi.Security
                 return null;
             }
 
-            _database.Configuration.ValidateOnSaveEnabled = false;
-            user.LastActivity = DateTime.Now;
-            _database.Entry(user).Property(x => x.LastActivity).IsModified = true;
+            if (setActivity)
+            {
+                _database.Configuration.ValidateOnSaveEnabled = false;
+                user.LastActivity = DateTime.Now;
+                _database.Entry(user).Property(x => x.LastActivity).IsModified = true;
 
-            _database.SaveChanges();
-            _database.Configuration.ValidateOnSaveEnabled = true;
+                _database.SaveChanges();
+                _database.Configuration.ValidateOnSaveEnabled = true;
+            }
 
             if (HttpContext.Current.Session != null)
                 HttpContext.Current.Session["CurrentUser"] = user;

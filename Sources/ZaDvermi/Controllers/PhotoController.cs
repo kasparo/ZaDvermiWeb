@@ -56,7 +56,7 @@ namespace ZaDvermi.Controllers
             if (isNewAlbum)
             {
                 article.CreateDate = DateTime.Now;
-                article.CreatedById = UserProvider.GetCurrentUser().Id;
+                article.CreatedById = UserProvider.GetCurrentUser(false).Id;
                 article.ArticleType = ArticleType.PhotoAlbum;
 
                 Database.Entry(article).State = EntityState.Added;

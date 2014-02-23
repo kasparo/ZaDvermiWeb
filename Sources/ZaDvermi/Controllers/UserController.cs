@@ -16,10 +16,14 @@ namespace ZaDvermi.Controllers
     {
         public ActionResult LogOnPanel()
         {
-            var user = UserProvider.GetCurrentUser();
+            var user = UserProvider.GetCurrentUser(true);
             if (user == null)
             {
-                return PartialView();
+                var newUser = new UserLogin()
+                {
+                    UserName = "josef@josef.cz"
+                };
+                return PartialView(newUser);
             }
             return PartialView("UserStatus", user);
         }

@@ -52,7 +52,7 @@ namespace ZaDvermi.Controllers
                     var mediaItem = new MediaItem()
                         {
                             CreateDate = DateTime.Now,
-                            CreatedById = UserProvider.GetCurrentUser().Id,
+                            CreatedById = UserProvider.GetCurrentUser(false).Id,
                             MediaType = mediaType,
                             OriginialFileName = status.name,
                             FileName = status.name

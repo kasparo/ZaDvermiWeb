@@ -48,7 +48,7 @@ namespace ZaDvermi.Controllers
                 if (list.Count() >= 8 || list.Count() == max)
                     break;
             } while (true);
-
+           
             return View("PhotoSelector", list);
         }
     }

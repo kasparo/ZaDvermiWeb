@@ -13,7 +13,7 @@
                 <div class="col-md-8">
                     <h2 id="nav-tabs">Představení</h2>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="text-align:right">
                     @if (Html.IsAccessible("Administrator", "Manager"))
                     {
                         <a href="@Url.Action("Add", "Performance")" class="btn btn-primary">
@@ -26,14 +26,60 @@
             <div>
                 <ul class="nav nav-tabs" style="margin-bottom: 15px;">
                     <li class="active"><a href="#plan" data-toggle="tab">Plánovaná</a></li>
-                    <li class=""><a href="#history" data-toggle="tab">Za námi</a></li>
+                    <li class=""><a href="#history" data-toggle="tab">Odehraná</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="plan">
-                        <p>Na tato představení se pylně připravujeme a chystáme - opakujeme si texty, ladíme scénu a přešíváme kostýmy. Budeme rádi, když se nás přijdete podívat.</p>
+                        <p style="margin-bottom: 20px">Na tato představení se pylně připravujeme a chystáme - opakujeme si texty, ladíme scénu a přešíváme kostýmy. Budeme rádi, když se nás přijdete podívat.</p>
+                         @foreach (var performance in Model.Where(p => p.ValidFrom.Value.Date >= DateTime.Now.Date).OrderBy(p=>p.ValidFrom))
+                         {
+                            <div class="row well">
+                                
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3>@performance.Title
+                                            @if (Html.IsAccessible("Administrator", "Manager"))
+                                            {
+                                                <a href="@Url.Action("Delete", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                                            }
+                                                </h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h4>@performance.ValidFrom.Value.ToString("d. M. yyyy")</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @Html.Raw(HttpUtility.HtmlDecode(performance.Content))
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-5" style="text-align: right">
+                                    <img src="@Url.Action("Download", "File", new {id = performance.ArticleMedias.First().MediaItemId })"  style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" class="img-rounded">
+                                </div>
+                            </div>
+                         }
                     </div>
                     <div class="tab-pane fade" id="history">
-                        <p>Toto je již za námi. Všude, kde jsme byli, nás čekalo skvělé publikum. Bez diváků by to, co děláme, nedávalo žádný smyle. Děkjume.</p>
+                        <p style="margin-bottom: 20px">Toto je již za námi. Všude, kde jsme byli, nás čekalo skvělé publikum. Bez diváků by to, co děláme, nedávalo žádný smyle. Děkjume.</p>
+                        
+                        <ul class="list-group">
+                            @foreach (var performance in Model.Where(p => p.ValidFrom.Value.Date < DateTime.Now.Date).OrderByDescending(p => p.ValidFrom))
+                            {
+                                <li class="list-group-item">
+                                    <h3>@(performance.Title) <small>@performance.ValidFrom.Value.ToString("d. M. yyyy")</small></h3>
+                                    <p>@Html.Raw(HttpUtility.HtmlDecode(performance.Content))</p>
+                                    @if (Html.IsAccessible("Administrator", "Manager"))
+                                    {
+                                        <a href="@Url.Action("Delete", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                                    }
+                                </li>
+                            } 
+                        </ul>
                     </div>
                
                 </div>

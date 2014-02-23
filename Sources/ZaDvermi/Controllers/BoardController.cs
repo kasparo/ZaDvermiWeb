@@ -66,7 +66,7 @@ namespace ZaDvermi.Controllers
                 var article = new Article()
                     {
                         CreateDate = DateTime.Now,
-                        CreatedBy = UserProvider.GetCurrentUser(),
+                        CreatedBy = UserProvider.GetCurrentUser(false),
                         ArticleType = ArticleType.Board,
                         Content = post,
                         Title = String.Empty
@@ -102,7 +102,7 @@ namespace ZaDvermi.Controllers
                 var article = new Article()
                 {
                     CreateDate = DateTime.Now,
-                    CreatedBy = UserProvider.GetCurrentUser(),
+                    CreatedBy = UserProvider.GetCurrentUser(false),
                     ArticleType = ArticleType.PrivateNotification,
                     Content = post,
                     Title = String.Empty

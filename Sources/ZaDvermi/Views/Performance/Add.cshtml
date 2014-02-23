@@ -10,7 +10,6 @@
                        FormMethod.Post,
                        new {role = "form"}))
 {
-    @Html.AntiForgeryToken()
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -43,14 +42,18 @@
                      <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                @Html.Label("Fotografie")
-                                @{ Html.RenderAction("PhotoSelector"); }
+                                <p><a href="#" class="refresh-photo-link">@Html.Label("Fotografie")</a></p>
+                                
+                                <div class="photo-selector">
+                                    @{ Html.RenderAction("PhotoSelector"); }
+                                </div>
+                                @Html.Hidden("selectedPhotoId", 0, new { id = "selectedPhotoId" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <button type="submit" class="btn btn-default">Uložit</button>
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary">Uložit</button>
                             <a href="@Url.Action("Index", "Performance")" class="btn btn-default">
                                 Zpět
                             </a>
@@ -78,15 +81,36 @@
                 height: '100px'
             });
             
-           
-
             // date controls
             $(".date-control").datepicker({
                 dateFormat: "d.m.yy"
             });
             $.datepicker.setDefaults($.datepicker.regional["cs"]);
+
+            // photo selector
+            initPotoSelector();
+
+            $.ajaxSetup({
+                cache: false
+            });
+            $('.refresh-photo-link').click(function () {
+                $(".photo-selector").load('@Url.Action("PhotoSelector")', function () {
+                    initPotoSelector();
+                });
+            });
         });
+
+        function initPotoSelector() {
+            $('.photo-link').click(function () {
+                $(".photo-selector .panel").removeClass('panel-primary').addClass('panel-default');
+                $(this).parents(".panel").removeClass('panel-default').addClass('panel-primary');
+
+                $("#selectedPhotoId").val($(this).data("id"));
+            });
+        }
     </script>
+
+   
     	
 }
 
