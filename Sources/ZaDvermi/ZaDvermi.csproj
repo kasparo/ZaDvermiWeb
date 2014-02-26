@@ -129,8 +129,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Common\BundlesOrder.cs" />
     <Compile Include="Common\HtmlExtensions.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PerformanceController.cs" />
@@ -160,12 +162,25 @@
     <Compile Include="Migrations\201402200602465_MediaItem.Designer.cs">
       <DependentUpon>201402200602465_MediaItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402240449517_ArticlePublished.cs" />
+    <Compile Include="Migrations\201402240449517_ArticlePublished.Designer.cs">
+      <DependentUpon>201402240449517_ArticlePublished.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402240928331_ArticlePreface.cs" />
+    <Compile Include="Migrations\201402240928331_ArticlePreface.Designer.cs">
+      <DependentUpon>201402240928331_ArticlePreface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402250406470_ArticleCreatedBy.cs" />
+    <Compile Include="Migrations\201402250406470_ArticleCreatedBy.Designer.cs">
+      <DependentUpon>201402250406470_ArticleCreatedBy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleMedia.cs" />
     <Compile Include="Models\FileDto.cs" />
     <Compile Include="Models\MediaItem.cs" />
     <Compile Include="Models\MemberShip.cs" />
+    <Compile Include="Models\NotificationContainer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +195,7 @@
     <Content Include="ckeditor\ckeditor.js" />
     <Content Include="ckeditor\config.js" />
     <Content Include="ckeditor\contents.css" />
+    <Content Include="ckeditor\configWithImages.js" />
     <Content Include="ckeditor\lang\cs.js" />
     <Content Include="ckeditor\lang\en.js" />
     <Content Include="ckeditor\plugins\clipboard\dialogs\paste.js" />
@@ -381,6 +397,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Documents\" />
     <Folder Include="App_Data\Pictures\" />
+    <Folder Include="ckeditor\plugins\imagebrowser\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -418,6 +435,12 @@
     <Content Include="Views\Performance\Index.cshtml" />
     <Content Include="Views\Shared\PhotoSelector.cshtml" />
     <Content Include="Views\Performance\Add.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Article\Edit.cshtml" />
+    <Content Include="Views\Article\Detail.cshtml" />
+    <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\Book\List.cshtml" />
+    <Content Include="Views\Board\_Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401240850073_Init.resx">
@@ -434,6 +457,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201402200602465_MediaItem.resx">
       <DependentUpon>201402200602465_MediaItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402240449517_ArticlePublished.resx">
+      <DependentUpon>201402240449517_ArticlePublished.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402240928331_ArticlePreface.resx">
+      <DependentUpon>201402240928331_ArticlePreface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402250406470_ArticleCreatedBy.resx">
+      <DependentUpon>201402250406470_ArticleCreatedBy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

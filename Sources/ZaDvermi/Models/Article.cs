@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,7 +12,8 @@ namespace ZaDvermi.Models
         Board = 2,
         PublicArticle = 3,
         PrivateNotification = 4,
-        Performance = 5
+        Performance = 5,
+        Book = 6
     }
 
     public class Article
@@ -23,12 +25,15 @@ namespace ZaDvermi.Models
 
         [MaxLength]
         [Column(TypeName = "ntext")]
+        public string Preface { get; set; }
+
+        [MaxLength]
+        [Column(TypeName = "ntext")]
         public string Content { get; set; }
 
         public int? ParentArticleId { get; set; }
 
-        [Required]
-        public int CreatedById { get; set; }
+        public int? CreatedById { get; set; }
 
         [Required]
         public DateTime CreateDate { get; set; }
@@ -43,7 +48,11 @@ namespace ZaDvermi.Models
         [DataType(DataType.Date)]
         [DisplayFormat(NullDisplayText = "---")]
         public DateTime? ValidTo { get; set; }
-
+      
+        [Required]
+        [DefaultValue(true)]
+        [Display(Name = "Zveřejnit")]
+        public bool Published { get; set; }
 
         public virtual ICollection<ArticleMedia> ArticleMedias { get; set; }
         public virtual Article ParentArticle { get; set; }

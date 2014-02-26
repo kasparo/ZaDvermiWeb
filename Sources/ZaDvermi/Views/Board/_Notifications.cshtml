@@ -1,0 +1,21 @@
+﻿@using ZaDvermi.Models
+@model NotificationContainer
+
+<div class="col-xs-12 col-md-6" style="margin-bottom: 15px;padding-left: 0">
+    @if (Model.Celebrators.Count > 0)
+    {
+        <div class="alert alert-dismissable alert-success">
+            @foreach (var user in Model.Celebrators)
+            {
+                <p><span class="glyphicon glyphicon-bell"></span> Divadelník <strong>@user.NickName</strong> bude mít <strong>@user.Birthday.ToString("d. M.")</strong> narozeniny.</p>
+            }
+        </div>
+    }
+    @if (Model.IsNewBookPost)
+    {
+        <div class="alert alert-info">
+            <span class="glyphicon glyphicon-book"></span>
+            V <a href="@Url.Action("Index", "Book")" class="alert-link">knize návštěv</a> přibyl nový vzkaz. Tak se tam jdi mrknkout.
+        </div>
+    }
+</div>

@@ -9,14 +9,14 @@ namespace ZaDvermi.Controllers
 {
     public class PerformanceController : BaseController
     {
-        //
-        // GET: /Performance/
-
         public ActionResult Index()
         {
             var performance = Database.Articles
                 .Where(a => a.ArticleType == ArticleType.Performance);
-                
+
+            if (!ZaDvermi.Security.UserProvider.IsAuthenticated)
+                performance = performance.Where(a => a.Published);
+
             return View(performance.ToList());
         }
 
@@ -29,8 +29,8 @@ namespace ZaDvermi.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize]
-        public ActionResult Add([Bind(Include = "Title,ValidFrom,Content")]Article performance, int selectedPhotoId)
+        [Authorize(Roles = "Administrator,Manager")]
+        public ActionResult Add([Bind(Include = "Title,ValidFrom,Content,Published")]Article performance, int selectedPhotoId)
         {
             if (string.IsNullOrEmpty(performance.Title) || !performance.ValidFrom.HasValue)
             {
@@ -45,7 +45,8 @@ namespace ZaDvermi.Controllers
             performance.CreateDate = DateTime.Now;
             performance.CreatedBy = UserProvider.GetCurrentUser(false);
             performance.ArticleType = ArticleType.Performance;
-
+            performance.Published = true;
+            
             if (selectedPhotoId != 0)
             {
                 var articleMedia = new ArticleMedia()
@@ -62,6 +63,7 @@ namespace ZaDvermi.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administrator,Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -1,0 +1,24 @@
+﻿@using ZaDvermi.Common
+@model List<ZaDvermi.Models.Article>
+@foreach (var article in Model)
+{
+    <div class="panel @(article.CreatedById.HasValue ? "panel-success" : "panel-default")">
+        <div class="panel-heading">
+            <h5><span class="glyphicon glyphicon-book"></span> @article.Title <small>@article.CreateDate.ToString("d.M.yyyy")</small></h5>
+           
+        </div>
+        <div class="panel-body">
+            <p>
+                @article.Preface
+            </p>
+        </div>
+        
+        @if (Html.IsAccessible("Administrator", "Manager"))
+        {
+            <div class="panel-footer" style="text-align: right">
+                <a href="@Url.Action("Delete", "Book", new {id = article.Id})" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+            </div>
+        }
+        
+    </div>
+}

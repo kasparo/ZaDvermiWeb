@@ -1,0 +1,78 @@
+﻿@using ZaDvermi.Common
+@model ZaDvermi.Models.Article
+
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="container">
+   
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <a href="@Url.Action("Index", "Article")" class="btn btn-default">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                        Zpět
+                    </a>
+                    @if (Html.IsAccessible("Administrator", "Manager", "Editor"))
+                    {
+                        <a href="@Url.Action("Edit", "Article", new { id = Model.Id })" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            Upravit
+                        </a>
+                    }
+                    @if (Html.IsAccessible("Administrator", "Manager", "Editor"))
+                    {
+                        <a href="@Url.Action("Delete", "Article", new { id = Model.Id })" class="btn btn-danger delete-button">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Odstranit
+                        </a>
+                    }
+                </div>
+            </div>            
+            <div class="row" style="margin-top: 20px">
+                
+                @if (Model.ArticleMedias.Any())
+                {
+                    <div class="col-md-4">
+                        <img style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" src="@Url.Action("Download", "File", new {id = Model.ArticleMedias.First().MediaItemId})" class="img-rounded" />
+                    </div>
+                }
+               
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>@Model.Title <small>@Model.CreateDate.ToString("d.M.yyyy")</small></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><strong>@Model.Preface</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                <div class="col-md-12">
+                    @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+@section JavaScriptToHead
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".delete-button").click(function() {
+                if (confirm('Opravdu chceš vymazat tento článek?')) {
+                    return true;
+                }
+                return false;
+            });
+        });
+    </script>
+}

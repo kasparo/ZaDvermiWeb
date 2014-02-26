@@ -126,6 +126,21 @@ namespace ZaDvermi.Controllers
             return Json(new FileDto(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult PicturesList()
+        {
+            var photos = Database.MediaItems.Where(m => m.MediaType == MediaType.Photo);
+
+            var list = from f in photos.ToList()
+                       select new
+                           {
+                               image = Url.Action("Download", "File", new {id = f.Id}),
+                               thumb = Url.Action("Download", "File", new {id = f.Id, thumb = true}),
+                               folder = ""
+                           };
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
         #region Private
         private void UploadPartialFile(string fileName, HttpRequestBase request, List<FileDto> statuses, MediaType type)
         {

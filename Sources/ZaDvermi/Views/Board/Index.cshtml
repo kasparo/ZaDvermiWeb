@@ -27,10 +27,13 @@
                 </div>
             }
         </div>
+        
+        @{ Html.RenderAction("Notifications");}
     </div>
+    <hr/>
     <div class="row">
         <!-- BOARD -->
-        <div class="col-xs-8 @(Model[3].Count > 0 ? "col-md-9" : "col-md-12") left-panel">
+        <div class="@(Model[3].Count > 0 ? "col-xs-8 col-md-9" : "col-xs-11 col-md-12") left-panel">
             <div class="row">
                 <div class="posts-list" data-next-index="15">
                     @{ Html.RenderPartial("List", Model);}
@@ -55,8 +58,6 @@
                     {
                         <div class="alert alert-danger">
                             @Html.Raw(HttpUtility.HtmlDecode(post.Content))
-
-                       
                             @if (Html.IsAccessible("Administrator", "Manager"))
                             {
                                 <div style="text-align: right">

@@ -1,0 +1,46 @@
+﻿@using ZaDvermi.Common
+@model List<ZaDvermi.Models.Article>
+
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+              @if (Html.IsAccessible("Administrator", "Manager", "Editor"))
+              {
+                  <div class="row">
+                      <div class="col-md-4">
+                  
+                          <a href="@Url.Action("Add", "Article")" class="btn btn-primary">
+                              <span class="glyphicon glyphicon-plus"></span>
+                              Přidat článek
+                          </a>
+                    
+                      </div>
+                  </div>
+              }
+            <div class="row" style="margin-top: 20px">
+                @foreach (var article in Model)
+                {
+                    <div class="col-md-3">
+                        <div class="thumbnail">
+                            @if (article.ArticleMedias.Any())
+                            {
+                                <img style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" class="img-rounded" />
+                            }
+                            <div class="caption">
+                                <h3>@article.Title</h3>
+                                <p>@(article.Preface.Length > 200 ? article.Preface.Substring(0, 200) + "..." : article.Preface)</p>
+                                <p><a class="btn btn-default" href="@Url.Action("Detail", new {id = article.Id})" role="button">Celý článek &raquo;</a></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+   </div>
+</div>
+
+

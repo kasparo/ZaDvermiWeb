@@ -28,6 +28,10 @@ namespace ZaDvermi.Controllers
             var albums = Database.Articles
                                  .Where(a => a.ArticleType == ArticleType.PhotoAlbum)
                                  .OrderByDescending(a => a.CreateDate);
+
+            if (!ZaDvermi.Security.UserProvider.IsAuthenticated)
+                albums = albums.Where(a => a.Published).OrderByDescending(a => a.CreateDate);
+
             return albums.ToList();
         }
 
@@ -47,7 +51,7 @@ namespace ZaDvermi.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator,Manager,Editor")]
-        public ActionResult Add([Bind(Include = "ID, Title, Content")]Article article, string listOfPictures, string album)
+        public ActionResult Add([Bind(Include = "ID, Title, Content, Published")]Article article, string listOfPictures, string album)
         {
             if (String.IsNullOrEmpty(article.Title))
                 article.Title = "---";
@@ -69,6 +73,7 @@ namespace ZaDvermi.Controllers
                 Database.Articles.Attach(article);
                 Database.Entry(article).Property(a => a.Title).IsModified = true;
                 Database.Entry(article).Property(a => a.Content).IsModified = true;
+                Database.Entry(article).Property(a => a.Published).IsModified = true;
 
                 Database.SaveChanges();
                 Database.Configuration.ValidateOnSaveEnabled = true;

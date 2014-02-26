@@ -39,11 +39,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h3>@performance.Title
-                                            @if (Html.IsAccessible("Administrator", "Manager"))
-                                            {
-                                                <a href="@Url.Action("Delete", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
-                                            }
-                                                </h3>
+                                                @if (Html.IsAccessible("Administrator", "Manager"))
+                                                {
+                                                    <a href="@Url.Action("Delete", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                                                }
+                                            </h3>
                                         </div>
                                     </div>
                                     <div class="row">

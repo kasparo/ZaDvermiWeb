@@ -7,37 +7,39 @@
 <div class="container">
      @using (Html.BeginForm("Add", "Photo", FormMethod.Post))
      {
-        <div class="well">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Název alba</label>
-                        @Html.TextBoxFor(m => m.Title, new {placeholder = "Název", @class = "form-control"})
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Popis</label>
-                        @Html.TextAreaFor(m => m.Content, new {placeholder = "Popis", @class = "form-control", style = "height: 100px"})
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-1">
-                    @Html.Hidden("listOfPictures", "", new { id = "list-of-pictures"})
-                    <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-floppy-save"></span>
-                        Uložit
-                    </button>
-                </div>
-                <div class="col-md-1">
-                    <a href="@Url.Action("Cancel","Photo")" class="btn btn-default">
-                        <span class="glyphicon glyphicon-floppy-remove"></span>
-                        Zpět
-                    </a>
-                </div>
-            </div>
-        </div>
+         <div class="well">
+             <div class="row">
+                 <div class="col-md-6">
+                     <div class="form-group">
+                         <label>Název alba</label>
+                         @Html.TextBoxFor(m => m.Title, new {placeholder = "Název", @class = "form-control"})
+                         @Html.LabelFor(m => m.Published)
+                         @Html.CheckBoxFor(m => m.Published)
+                     </div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="form-group">
+                         <label>Popis</label>
+                         @Html.TextAreaFor(m => m.Content, new {placeholder = "Popis", @class = "form-control", style = "height: 100px"})
+                     </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-md-1">
+                     @Html.Hidden("listOfPictures", "", new {id = "list-of-pictures"})
+                     <button type="submit" class="btn btn-primary">
+                         <span class="glyphicon glyphicon-floppy-save"></span>
+                         Uložit
+                     </button>
+                 </div>
+                 <div class="col-md-1">
+                     <a href="@Url.Action("Cancel", "Photo")" class="btn btn-default">
+                         <span class="glyphicon glyphicon-floppy-remove"></span>
+                         Zpět
+                     </a>
+                 </div>
+             </div>
+         </div>
      }
     
 

@@ -69,7 +69,8 @@ namespace ZaDvermi.Controllers
                         CreatedBy = UserProvider.GetCurrentUser(false),
                         ArticleType = ArticleType.Board,
                         Content = post,
-                        Title = String.Empty
+                        Title = String.Empty,
+                        Published = false
                     };
 
                 Database.Entry(article).State = EntityState.Added;
@@ -105,7 +106,8 @@ namespace ZaDvermi.Controllers
                     CreatedBy = UserProvider.GetCurrentUser(false),
                     ArticleType = ArticleType.PrivateNotification,
                     Content = post,
-                    Title = String.Empty
+                    Title = String.Empty,
+                    Published = false
                 };
                 var validFrom = DateTime.Now;
                 DateTime.TryParse(form["ValidFrom"], out validFrom);
@@ -119,6 +121,30 @@ namespace ZaDvermi.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public PartialViewResult Notifications()
+        {
+
+            var users = Database.Users
+                                .ToArray()
+                                .Where(u => IsBirthdayInNextDays(u.Birthday))
+                                .OrderBy(u => u.NickName);
+                                
+
+            var result = new NotificationContainer
+                {
+                    Celebrators = users.ToList(),
+                    IsNewBookPost = true
+                };
+            return PartialView("_Notifications", result);
+        }
+
+        public bool IsBirthdayInNextDays(DateTime actualBirthday)
+        {
+            var birthday = new DateTime(DateTime.Now.Year, actualBirthday.Month, actualBirthday.Day);
+            return birthday > DateTime.Now && birthday < DateTime.Now.AddDays(14);
         }
 
     }

@@ -1,0 +1,123 @@
+﻿@using ZaDvermi.Common
+@model List<ZaDvermi.Models.Article>
+
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Kniha návštěv</h2>
+                </div>
+                <div class="col-md-4" style="text-align:right">
+                    <a href="#" class="btn btn-primary create-item">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Přidat vzkaz
+                    </a>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            Budeme rádi, když nám necháte vzkaz. Chvála nás potěší a povzbudí, kritika nás motivuje k lepším výkonům. Vážíme si každého ohlasu.
+                        </p>
+                    </div>
+                </div>
+               
+            </div>
+            <hr/>
+            <div class="row items-list" data-next-index="5">
+               @{ Html.RenderAction("List", new {indexFrom = 0});}
+            </div>
+             <div class="row">
+                <div class="col-md-3 col-md-offset-5">
+                    <button type="button" class="btn btn-default next-items">
+                        Načíst další vzkazy
+                    </button>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    
+    <!-- ADD ITEM on BOARD -->
+    <div id="dialog-form-book" title="Přidat příspěvek do knihy návštěv">
+        @using (Html.BeginForm("Add", "Book", FormMethod.Post, new {id = "editor-form-book"}))
+        {
+            @Html.AntiForgeryToken()
+            
+            <div class="row" style="margin: 5px 0">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Vaše jméno")
+                        @Html.TextBox("Name", "", new {@class = "form-control"})
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin: 5px 0">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.Label("Vzkaz")
+                        @Html.TextArea("Post", new {@class = "form-control", style = "height: 150px"})
+                    </div>
+                </div>
+            </div>
+            
+        }      
+    </div>
+</div>
+
+@section JavaScriptToHead
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".create-item").click(function() {
+                $("#dialog-form-book").dialog("open");
+                return false;
+            });
+
+            $("#dialog-form-book").dialog({
+                autoOpen: false,
+                height: 420,
+                width: 520,
+                modal: true,
+                resizable: false,
+                buttons: {
+                    "Přidat": function() {
+                        $('#editor-form-book').submit();
+                        $(this).dialog("close");
+                    },
+                    "Zpět": function() {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+
+            $(".next-items").click(function() {
+                var index = $(".items-list").attr("data-next-index");
+                $.ajax({
+                    url: '@Url.Action("List", "Book")',
+                    data: { "indexFrom": index },
+                    cache: false,
+                    success: function(response) {
+                        var container = $(".items-list");
+                        container.append($(response));
+                        container.attr("data-next-index", parseInt(index) + 5);
+                    }
+                });
+                return false;
+            });
+            
+            $(".delete-button").click(function () {
+                if (confirm('Opravdu chceš vymazat tento vzkaz?')) {
+                    return true;
+                }
+                return false;
+            });
+        });
+    </script>
+    	
+}
+
