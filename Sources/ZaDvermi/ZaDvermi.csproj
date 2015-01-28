@@ -174,6 +174,10 @@
     <Compile Include="Migrations\201402250406470_ArticleCreatedBy.Designer.cs">
       <DependentUpon>201402250406470_ArticleCreatedBy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501211934392_LinkedArticles.cs" />
+    <Compile Include="Migrations\201501211934392_LinkedArticles.Designer.cs">
+      <DependentUpon>201501211934392_LinkedArticles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleMedia.cs" />
@@ -326,7 +330,15 @@
     <Content Include="ckeditor\skins\moono\images\lock.png" />
     <Content Include="ckeditor\skins\moono\images\refresh.png" />
     <Content Include="ckeditor\styles.js" />
+    <Content Include="Content\Images\facebook.png" />
+    <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\logo_bw.png" />
+    <Content Include="Content\Images\user_female.png" />
+    <Content Include="Content\Images\user_male.png" />
+    <Content Include="Content\Images\intro.jpg" />
     <Content Include="Content\Images\minicolors\jquery.minicolors.png" />
+    <Content Include="Content\Images\peoples.jpg" />
+    <Content Include="Content\Images\zamek.jpg" />
     <Content Include="Content\Scripts\blueimp-gallery.js" />
     <Content Include="Content\Scripts\canvas-to-blob.min.js" />
     <Content Include="Content\Scripts\jquery-2.1.0.min.js" />
@@ -368,9 +380,6 @@
     <Content Include="Content\Styles\bootstrap.css" />
     <Content Include="Content\Styles\custom.css" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\Images\1.jpg" />
-    <Content Include="Content\Images\2.jpg" />
-    <Content Include="Content\Images\3.jpg" />
     <Content Include="Content\Images\blank.png" />
     <Content Include="Content\Images\curtain_top.png" />
     <Content Include="Content\Images\frontcurtain.jpg" />
@@ -413,6 +422,8 @@
     <Content Include="ckeditor\samples\sample_posteddata.php" />
     <Content Include="ckeditor\skins\moono\readme.md" />
     <Content Include="Content\Scripts\jquery-2.1.0.min.map" />
+    <None Include="Properties\PublishProfiles\ASPONE server.pubxml" />
+    <None Include="Properties\PublishProfiles\localhost IIS.pubxml" />
     <None Include="Properties\PublishProfiles\www.divadlo-zadvermi.cz.pubxml" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
@@ -441,6 +452,7 @@
     <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Book\List.cshtml" />
     <Content Include="Views\Board\_Notifications.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401240850073_Init.resx">
@@ -466,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201402250406470_ArticleCreatedBy.resx">
       <DependentUpon>201402250406470_ArticleCreatedBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501211934392_LinkedArticles.resx">
+      <DependentUpon>201501211934392_LinkedArticles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

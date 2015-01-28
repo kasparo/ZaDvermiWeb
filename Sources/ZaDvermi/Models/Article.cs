@@ -35,6 +35,10 @@ namespace ZaDvermi.Models
 
         public int? CreatedById { get; set; }
 
+        public int? LinkedArticle1Id { get; set; }
+
+        public int? LinkedArticle2Id { get; set; }
+
         [Required]
         public DateTime CreateDate { get; set; }
 
@@ -57,5 +61,7 @@ namespace ZaDvermi.Models
         public virtual ICollection<ArticleMedia> ArticleMedias { get; set; }
         public virtual Article ParentArticle { get; set; }
         public virtual User CreatedBy { get; set; }
+        public virtual Article LinkedArticle1 { get; set; }
+        public virtual Article LinkedArticle2 { get; set; }
     }
 }

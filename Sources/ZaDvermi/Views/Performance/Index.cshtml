@@ -73,9 +73,30 @@
                                 <li class="list-group-item">
                                     <h3>@(performance.Title) <small>@performance.ValidFrom.Value.ToString("d. M. yyyy")</small></h3>
                                     <p>@Html.Raw(HttpUtility.HtmlDecode(performance.Content))</p>
-                                    @if (Html.IsAccessible("Administrator", "Manager"))
+                                    @if (Html.IsAccessible("Administrator"))
                                     {
                                         <a href="@Url.Action("Delete", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a href="@Url.Action("LinkArticle", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs link-article" data-value="@performance.Id"><span class="glyphicon glyphicon glyphicon-link"></span> 
+                                             @if (performance.LinkedArticle1Id != null)
+                                             {
+                                                <span>@performance.LinkedArticle1.Title</span>
+                                             }
+                                            else
+                                            {
+                                                 <span>Připojit článek</span>
+                                             }
+                                        </a>
+                                        <a href="@Url.Action("LinkPhotoAlbum", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs link-performance" data-value="@performance.Id"><span class="glyphicon glyphicon glyphicon-link"></span> 
+                                            @if (performance.LinkedArticle2Id != null)
+                                             {
+                                                <span>@performance.LinkedArticle2.Title</span>
+                                             }
+                                            else
+                                            {
+                                                 <span>Připojit fotoalbum</span>
+                                             }
+                                            
+                                        </a>
                                     }
                                 </li>
                             } 
@@ -86,6 +107,64 @@
             </div>
         </div>
     </div>
+
+
+
+     <!-- ADD ITEM on BOARD -->
+    <div id="dialog-form-performance-article" title="Připojit článek">
+        @using (Html.BeginForm("LinkArticle", "Performance", FormMethod.Post, new { id = "dialog-form-performance-article" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("Id", 0, new { @id = "performance-id" });
+            <div class="row" style="margin: 5px 0">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Články")
+                        @Html.DropDownList("LinkedArticle1Id", (SelectList)ViewBag.Articles, "... vyber článek", new {@class = "form-control"})
+                    </div>
+                </div>
+            </div>
+          
+            
+        }      
+    </div>
+
 </div>
 
+@section JavaScriptToHead
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".link-article").click(function () {
+                $("#performance-id").val($(this).data("value"));
+                $("#dialog-form-performance-article").dialog("open");
+
+                return false;
+            });
+
+            $("#dialog-form-performance-article").dialog({
+                autoOpen: false,
+                height: 420,
+                width: 520,
+                modal: true,
+                resizable: false,
+                buttons: {
+                    "Uložit": function () {
+                        $('#dialog-form-performance-article').submit();
+                        $(this).dialog("close");
+                    },
+                    "Zpět": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+            $(".delete-button").click(function () {
+                if (confirm('Opravdu chcete vymazat představení?')) {
+                    return true;
+                }
+                return false;
+            });
+        });
+    </script>
+}
 

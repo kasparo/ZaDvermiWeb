@@ -9,39 +9,63 @@
  <!-- Main jumbotron -->
     <div class="jumbotron">
         <div class="container">
-            <h1>Kdo jsme ...</h1>
-            <p>Spolek mladých ochotníků, který vznikl v létě roku 2007 s cílem obnovit tradici ochotnického divadla v Náměšti na Hané. Naše činnost ale začala už dříve. Možná nás znáte z večerních pohádkových prohlídek zámku v Náměšti na Hané. Nyní se však věnuje zejména jevištním hrám. V našem repertoáru byste mohli vidět například hry Mluvící prsten, Strašidlo Cantervillské, Tenor na Roztrhání nebo Nájemníci pana Swana aneb Habaďůra.</p>
-            <p><a class="btn btn-primary btn-lg" role="button" href="@Url.Action("Index","Article")">Více o nás &raquo;</a></p>
-        </div>
-    </div>
-
-<div class="container">
-    @if (Model["Performance"].Any())
-    {
-        var performance = Model["Performance"][0];
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-primary" >
-                    <div class="panel-body" style="text-align: center">
-                        <p>Dovolte, abychom Vás pozvali na naše nejbližší představení</p>
-                        <h2>@performance.Title <small>-</small> @performance.ValidFrom.Value.ToString("d.M.yyyy")</h2>
-                        <p><a class="btn btn-primary" href="@Url.Action("Index", "Performance")" role="button">Další představení</a></p>    
-                    </div>
+            <div class="row">
+                <div class="col-xs-6 col-md-4">
+                    <img src="/Content/Images/intro.jpg" alt="" class="img-rounded" width="360" style="margin-top:32px">
+                </div>
+                <div class="col-xs-12 col-md-8">
+                    <h1>Kdo jsme ...</h1>
+                    <p>Spolek mladých ochotníků, který vznikl v létě roku 2007 s cílem obnovit tradici ochotnického divadla v Náměšti na Hané. Naše činnost ale začala už dříve. Možná nás znáte z večerních pohádkových prohlídek zámku v Náměšti na Hané. Nyní se však věnuje zejména jevištním hrám. V našem repertoáru byste mohli vidět například hry Mluvící prsten, Strašidlo Cantervillské, Tenor na Roztrhání nebo Nájemníci pana Swana aneb Habaďůra.</p>
+                    <p class="text-right"><a class="btn btn-primary btn-lg" role="button" href="@Url.Action("Index","Article")">Více o nás &raquo;</a></p>
                 </div>
             </div>
         </div>
-        <hr/>
-    }
+    </div>
+
+
+@if (Model["Performance"].Any())
+{
+    var performance = Model["Performance"][0];
+    <div class="row" style="background-color: #f4f4f4; padding: 20px; padding-bottom: 0; margin-bottom: 20px">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-primary" >
+                <div class="panel-body" style="text-align: center">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="/Content/Images/logo_bw.png" alt="" style="width: 160px; height: 160px;">
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <p>Dovolte, abychom Vás pozvali na naše nejbližší představení</p>
+                            <h2>@performance.Title <small>-</small> @performance.ValidFrom.Value.ToString("d.M.yyyy")</h2>
+                            <p><a class="btn btn-primary" href="@Url.Action("Index", "Performance")" role="button">Další představení</a></p> 
+                        </div>
+                    </div>
+                       
+                </div>
+            </div>
+        </div>
+    </div>
+        
+}
+<div class="container">  
     <div class="row">
         @foreach (var article in Model["Article"])
         {
             <div class="col-md-4">
-                <div class="thumbnail" style="height: 470px;">
-                    <img style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" class="img-circle" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" >
+                <div class="thumbnail" >
+                    
                     <div class="caption">
-                        <h2>@article.Title</h2>
-                        <p>@(article.Preface.Length > 200 ? article.Preface.Substring(0, 200) + "..." : article.Preface)</p>
-                        <p><a class="btn btn-default" href="@Url.Action("Detail", "Article", new {id = article.Id})" role="button">Celý článek &raquo;</a></p>
+                        <h2><a href="@Url.Action("Detail", "Article", new {id = article.Id})">@article.Title</a></h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img style="width: 160px; height: 120px;" alt="160x120" data-src="holder.js/160x120" class="img-rounded" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" >
+                            </div>
+                            <div class="col-md-6">
+                                <p>@(article.Preface.Length > 200 ? article.Preface.Substring(0, 200) + "..." : article.Preface)</p>
+                            </div>
+                        </div>
+                       <p class="text-left" style="margin-top: 14px"><a class="btn btn-default" href="@Url.Action("Detail", "Article", new {id = article.Id})" role="button">Celý článek &raquo;</a></p>
+                        
                     </div>
                 </div>
             </div>
@@ -50,6 +74,8 @@
 </div>
 
 <!-- CITATIONS -->
+@if(Model["Book"].Any())
+{
 <div class="row" style="min-height: 250px; background-color: #eeeeee">
     <div class="col-md-10 col-md-offset-1">
         <div id="carousel-example-generic" class="carousel slide" data-interval="5000" data-ride="carousel">
@@ -76,3 +102,4 @@
         </div>
     </div>
 </div>
+}

@@ -19,10 +19,14 @@ namespace ZaDvermi.Controllers
             var user = UserProvider.GetCurrentUser(true);
             if (user == null)
             {
-                var newUser = new UserLogin()
+                var newUser = new UserLogin();
+                HttpCookie existingCookie = Request.Cookies["userName"];
+                if (existingCookie != null)
                 {
-                    UserName = "josef@josef.cz"
-                };
+                    newUser.UserName = existingCookie.Value;
+                }
+
+          
                 return PartialView(newUser);
             }
             return PartialView("UserStatus", user);
@@ -40,6 +44,19 @@ namespace ZaDvermi.Controllers
         {
             if (this.ModelState.IsValid && UserProvider.ValidateUser(model))
             {
+                HttpCookie existingCookie = Request.Cookies["userName"];
+                if (existingCookie != null)
+                {
+                    // force to expire it
+                    existingCookie.Value = model.UserName;
+                    existingCookie.Expires = DateTime.Now.AddHours(-20);
+                }
+
+                // create a cookie
+                HttpCookie newCookie = new HttpCookie("userName", model.UserName);
+                newCookie.Expires = DateTime.Today.AddMonths(3);
+                Response.Cookies.Add(newCookie);
+
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                 if (this.Url.IsLocalUrl(returnUrl))
                 {

@@ -7,26 +7,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
     @Styles.Render("~/bundles/css")
-  
+    <link rel="icon" type="image/x-icon" href="/Content/Images/favicon.ico" />
 </head>
 <body>
    
     @RenderBody()
     
     <footer>
-        <div class="aligncenter">
-            <h4><strong>Osdružení ZA DVEŘMI</strong></h4>   
-            <p><span class="glyphicon glyphicon-home"></span> Náměšť na Hané</p> 
-            <p><span class="glyphicon glyphicon-globe"></span> www.divadlo-zadvermi.cz</p> 
-            <p><span class="glyphicon glyphicon-envelope"></span> zadvermi(at)seznam.cz</p> 
+        <div class="row" style="margin:0">
+            
+            <div class="col-md-2" >
+                <p><span class="glyphicon glyphicon-home"></span> <a href="http://www.namestnahane.cz">Náměšť na Hané</a></p> 
+                <p><span class="glyphicon glyphicon-globe"></span> <a href="http://www.divadlo-zadvermi.cz">www.divadlo-zadvermi.cz</a></p> 
+                <p><span class="glyphicon glyphicon-envelope"></span> zadvermi(at)seznam.cz</p> 
+            </div>
+            <div class="col-md-8" >
+
+                <div class="fb-follow" data-href="https://www.facebook.com/pages/O-s-ZA-DVE%C5%98MI/112737665403436" data-colorscheme="light" data-layout="button_count" data-show-faces="true"></div>
+                <p style="padding-top: 8px"><a href="https://www.facebook.com/pages/O-s-ZA-DVE%C5%98MI/112737665403436" target="_blank"><img src="/Content/Images/facebook.png" alt="" width="40" /></a></p>
+            </div>
+                
         </div>
-    </footer>
+
+    </footer>  
+    
     
     
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/common")
     
     @RenderSection("scripts", required: false)
+
+    <!-- Facebook -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1501192240141109',
+                xfbml: true,
+                version: 'v2.2'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/cs_CZ/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+   <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/cs_CZ/sdk.js#xfbml=1&appId=1501192240141109&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
 </body>
 </html>

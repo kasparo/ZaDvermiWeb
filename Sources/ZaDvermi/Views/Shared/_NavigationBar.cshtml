@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                 <img style="width: 33px; height: 33px;" src="~/Content/Images/logo.png" data-src="holder.js/33x33">
                 Divadlo Za Dveřmi
             </a>
@@ -21,17 +21,17 @@
                     <a href="@Url.Action("Index", "Home")" class="active"><span class="glyphicon glyphicon-home"></span></a>
                 </li>
                 <li>@Html.ActionLink("Představení","Index","Performance")</li>
-                <li><a href="#">Kontakt</a></li>
+                <li>@Html.ActionLink("Kontakt","Contact","Home")</li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">O nás <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>@Html.ActionLink("Fotogalerie","Index","Photo")</li>
-                        <li><a href="#">Repertoár</a></li>
+                        <!--<li><a href="#">Realizované hry</a></li>-->
                         <li>@Html.ActionLink("Články","Index","Article")</li>
                         <li class="divider"></li>
                         <li>@Html.ActionLink("Návštěvní kniha","Index","Book")</li>
-                        <li class="divider"></li>
-                        <li><a href="#">Fotoarchiv</a></li>
+                        <!--<li class="divider"></li>
+                        <li><a href="#">Fotoarchiv</a></li>-->
                     </ul>
                 </li>
                 @if (UserProvider.IsAuthenticated)
@@ -39,12 +39,12 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Klubovna<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Plkárna","Index","Board")</li>
-                            <li><a href="#">Ankety</a></li>
-                            <li><a href="#">Dokumenty</a></li>
+                            <li>@Html.ActionLink("Nástěnka","Index","Board")</li>
+                            <!--<li><a href="#">Ankety</a></li>-->
+                            <!--<li><a href="#">Dokumenty</a></li>-->
                             <li>@Html.ActionLink("Divadelníci","List","User")</li>
-                            <li class="divider"></li>
-                            <li><a href="#">Kostýmy</a></li>
+                            <!--<li class="divider"></li>
+                            <li><a href="#">Kostýmy</a></li>-->
                         </ul>
                     </li>
                 }

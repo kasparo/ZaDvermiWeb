@@ -17,6 +17,9 @@ namespace ZaDvermi.Controllers
             if (!ZaDvermi.Security.UserProvider.IsAuthenticated)
                 performance = performance.Where(a => a.Published);
 
+            ViewBag.Articles = new SelectList(Database.Articles.Where(a => a.ArticleType == ArticleType.PublicArticle), "Id", "Title"); 
+            ViewBag.PhotoAlbums = new SelectList(Database.Articles.Where(a => a.ArticleType == ArticleType.PhotoAlbum), "Id", "Title");
+
             return View(performance.ToList());
         }
 
@@ -80,5 +83,14 @@ namespace ZaDvermi.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        [Authorize(Roles = "Administrator,Manager")]
+        public ActionResult LinkArticle([Bind(Include = "Id,LinkedArticle1Id")]Article performance)
+        {
+            return RedirectToAction("Index");
+        }
+        
     }
 }

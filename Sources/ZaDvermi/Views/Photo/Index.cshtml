@@ -62,7 +62,7 @@
                 var id = $(this).data("id");
                 var url = '@Url.Action("Add", "Photo")' + "/" + id;
 
-                var link = '<p><a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-picture"></span> Přidat fotografie do alba</a></p>';
+                var link = '<p><a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-picture"></span> Upravit album</a></p>';
                 link = link.replace("#", url);
                 $(".add-pictures-button").empty().append(link);
 

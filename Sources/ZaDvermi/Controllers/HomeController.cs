@@ -10,7 +10,7 @@ namespace ZaDvermi.Controllers
 {
     public class HomeController : BaseController
     {
-      
+
         public ActionResult Index()
         {
             var contentItems = new Dictionary<string, List<Article>>();
@@ -31,7 +31,7 @@ namespace ZaDvermi.Controllers
                                       .OrderBy(a => a.ValidFrom);
 
             contentItems.Add("Performance", performance.Take(1).ToList());
-                
+
             // visit book
             var book = Database.Articles
                                .Where(
@@ -46,5 +46,11 @@ namespace ZaDvermi.Controllers
             return View(contentItems);
         }
 
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
+
 }
