@@ -24,11 +24,11 @@ namespace ZaDvermi
             bundles.Add(commonBundle);
 
             // ckeditor
-            var ckEditorBundle = new ScriptBundle("~/bundles/ckeditor").Include(
+            /*var ckEditorBundle = new ScriptBundle("~/bundles/ckeditor").Include(
                 "~/ckeditor/ckeditor.js",
                 "~/ckeditor/adapters/jquery.js");
             ckEditorBundle.Orderer = new BundlesOrder();
-            bundles.Add(ckEditorBundle);
+            bundles.Add(ckEditorBundle);*/
 
             // colorpicker
             bundles.Add(new ScriptBundle("~/bundles/colorpicker").Include(

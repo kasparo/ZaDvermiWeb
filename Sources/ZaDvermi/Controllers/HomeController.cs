@@ -37,7 +37,7 @@ namespace ZaDvermi.Controllers
                                .Where(
                                    a =>
                                    a.ArticleType == ArticleType.Book && a.CreatedById == null)
-                               .OrderByDescending(a => a.CreateDate)
+                               .OrderBy(a => Guid.NewGuid())
                                .Take(10);
             var list = book.ToList();
             list.Shuffle();

@@ -23,7 +23,7 @@
 /* NAVIGATION */
 .navbar {
     /*top: -52px;*/
-    background-image: url(../images/curtain_top.png);
+    background-image: url(/Content/images/curtain_top.png);
     background-color: transparent;
     background-repeat: repeat-x;
     height: 100px;
@@ -49,7 +49,7 @@
 
 /* JUMBOTRON */
 .jumbotron {
-    background-image: url(../images/logo_gray.png);
+    background-image: url(/Content/images/logo_gray.png);
     background-repeat: no-repeat;
     background-position: 50% bottom;
     padding-top: 60px;

@@ -59,7 +59,7 @@
                                     
                                 </div>
                                 <div class="col-md-5" style="text-align: right">
-                                    <img src="@Url.Action("Download", "File", new {id = performance.ArticleMedias.First().MediaItemId })"  style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" class="img-rounded">
+                                    <img src="@Url.Action("Download", "File", new {id = (performance.ArticleMedias.Any() ? performance.ArticleMedias.First().MediaItemId : 0) })"  style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" class="img-rounded">
                                 </div>
                             </div>
                          }

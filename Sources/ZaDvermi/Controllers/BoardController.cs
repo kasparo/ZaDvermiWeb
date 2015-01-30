@@ -131,12 +131,12 @@ namespace ZaDvermi.Controllers
                                 .ToArray()
                                 .Where(u => IsBirthdayInNextDays(u.Birthday))
                                 .OrderBy(u => u.NickName);
-                                
 
+            DateTime booDate = DateTime.Now.AddDays(-7);
             var result = new NotificationContainer
                 {
                     Celebrators = users.ToList(),
-                    IsNewBookPost = true
+                    IsNewBookPost = Database.Articles.Any(n => n.ArticleType == ArticleType.Book && n.CreateDate > booDate)
                 };
             return PartialView("_Notifications", result);
         }
