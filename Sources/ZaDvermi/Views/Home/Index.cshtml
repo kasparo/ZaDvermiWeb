@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6 col-md-4">
-                    <img src="/Content/Images/intro.jpg" alt="" class="img-rounded" width="360" style="margin-top:32px">
+                    <img src="/Content/Images/intro.jpg" alt="" class="img-rounded img-responsive" width="360" style="margin-top:32px">
                 </div>
                 <div class="col-xs-12 col-md-8">
                     <h1>Kdo jsme ...</h1>
@@ -27,12 +27,13 @@
 {
     var performance = Model["Performance"][0];
     <div class="row" style="background-color: #f4f4f4; padding: 20px; padding-bottom: 0; margin-bottom: 20px">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-info" >
                 <div class="panel-body" style="text-align: center">
                     <div class="row">
+                       
                         <div class="col-md-4">
-                            <img src="/Content/Images/logo_bw.png" alt="" style="width: 160px; height: 160px;">
+                            <img src="@Url.Action("Download", "File", new {id = (performance.ArticleMedias.Any() ? performance.ArticleMedias.First().MediaItemId : 0) })"  style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" class="img-rounded">
                         </div>
                         <div class="col-md-6 text-center">
                             <p>Dovolte, abychom Vás pozvali na naše nejbližší představení</p>
@@ -51,14 +52,14 @@
     <div class="row">
         @foreach (var article in Model["Article"])
         {
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="thumbnail" >
                     
                     <div class="caption">
                         <h2><a href="@Url.Action("Detail", "Article", new {id = article.Id})">@article.Title</a></h2>
                         <div class="row">
                             <div class="col-md-6">
-                                <img style="width: 160px; height: 120px;" alt="160x120" data-src="holder.js/160x120" class="img-rounded" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" >
+                                <img  class="img-rounded img-responsive" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" >
                             </div>
                             <div class="col-md-6">
                                 <p>@(article.Preface.Length > 200 ? article.Preface.Substring(0, 200) + "..." : article.Preface)</p>

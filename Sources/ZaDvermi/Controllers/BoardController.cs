@@ -24,7 +24,7 @@ namespace ZaDvermi.Controllers
 
         private List<List<Article>> GetPosts(int indexFrom)
         {
-            var model = new List<List<Article>>(4);
+            var model = new List<List<Article>>(2);
 
             // board
             var posts = from p in Database.Articles
@@ -33,14 +33,15 @@ namespace ZaDvermi.Controllers
                         select p;
           
             var result = posts.Skip(indexFrom).Take(15).ToList();
-            var helpNumber = new int[] { 1, 2, 0 };
+            /*var helpNumber = new int[] { 1, 2, 0 };
             foreach (int number in helpNumber)
             {
                 var articles = result.Select((value, index) => new { value, index })
                                      .Where(pair => ((pair.index + 1) % 3) == number)
                                      .Select(pair => pair.value);
                 model.Add(articles.ToList());
-            }
+            }*/
+            model.Add(result);
 
             // notifications
             var notificaions = from p in Database.Articles

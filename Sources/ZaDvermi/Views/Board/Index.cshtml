@@ -33,7 +33,7 @@
     <hr/>
     <div class="row">
         <!-- BOARD -->
-        <div class="@(Model[3].Count > 0 ? "col-xs-8 col-md-9" : "col-xs-11 col-md-12") left-panel">
+        <div class="@(Model[1].Count > 0 ? "col-xs-8 col-md-9" : "col-xs-11 col-md-12") left-panel">
             <div class="row">
                 <div class="posts-list" data-next-index="15">
                     @{ Html.RenderPartial("List", Model);}
@@ -49,12 +49,12 @@
             </div>
         </div>
        
-        @if (Model[3].Count > 0)
+        @if (Model[1].Count > 0)
         {
             <!-- ALERTS and NOTIFICATIONS -->
             <div class="col-xs-4 col-md-3 notifications-panel" >
                 <div class="well">
-                    @foreach (var post in Model[3])
+                    @foreach (var post in Model[1])
                     {
                         <div class="alert alert-danger">
                             @Html.Raw(HttpUtility.HtmlDecode(post.Content))
@@ -145,11 +145,9 @@
                     data: { "indexFrom": index },
                     cache: false,
                     success: function (response) {
-                        for (var i = 1; i <= 3; i++) {
-                            var panels = $(response).find("div[data-panel-number='" + i + "']");
-                            var container = $(".posts-list").find("div[data-container-number='" + i + "']");
-                            container.append(panels);
-                        }
+                        var panels = $(response);
+                        var container = $(".posts-list"); 
+                        container.append(panels);
                         $(".posts-list").attr("data-next-index", parseInt(index) + 15);
                        
                     }

@@ -8,48 +8,51 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-              @if (Html.IsAccessible("Administrator", "Manager", "Editor"))
-              {
-                  <div class="row">
-                      <div class="col-md-4">
-                  
-                          <a href="@Url.Action("Add", "Article")" class="btn btn-primary">
-                              <span class="glyphicon glyphicon-plus"></span>
-                              Přidat článek
-                          </a>
-                    
-                      </div>
-                  </div>
-              }
-            <div class="row" style="margin-top: 20px">
-                @foreach (var article in Model)
-                {
+            @if (Html.IsAccessible("Administrator", "Manager", "Editor"))
+            {
+                <div class="row">
                     <div class="col-md-4">
-                        <div class="thumbnail">
-                            @if (article.ArticleMedias.Any())
-                            {
-                                <img style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" class="img-rounded" />
-                            }
-                            <div class="caption">
-                                <h3>@article.Title</h3>
-                                @if(article.Preface != null)
-                                {
-                                    <p>@(article.Preface.Length > 200 ? article.Preface.Substring(0, 200) + "..." : article.Preface)</p>
-                                }
-                                <p class="text-right">
-                                    @if (!article.Published)
-                                    {
-                                        <span class="glyphicon glyphicon-eye-close "></span>
-                                    }
-                                    <a class="btn btn-default" href="@Url.Action("Detail", new {id = article.Id})" role="button">Celý článek &raquo;</a>
-                                   
-                                </p>
-                            </div>
-                           
-                        </div>
+                  
+                        <a href="@Url.Action("Add", "Article")" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Přidat článek
+                        </a>
+                    
                     </div>
-                }
-            </div>
+                </div>
+            }
+            
+            @for(int i = 1; i <= Model.Count; i++)
+            {
+                var article = Model[i - 1];
+                
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="thumbnail">
+                        @if (article.ArticleMedias.Any())
+                        {
+                            <img style="width: 250px; height: 180px;" alt="250x180" data-src="holder.js/250x180" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" class="img-rounded" />
+                        }
+                        <div class="caption">
+                            <h3>@article.Title</h3>
+                            @if(article.Preface != null)
+                            {
+                                <p>@(article.Preface.Length > 200 ? article.Preface.Substring(0, 200) + "..." : article.Preface)</p>
+                            }
+                            <p class="text-right">
+                                @if (!article.Published)
+                                {
+                                    <span class="glyphicon glyphicon-eye-close "></span>
+                                }
+                                <a class="btn btn-default" href="@Url.Action("Detail", new {id = article.Id})" role="button">Celý článek &raquo;</a>
+                                   
+                            </p>
+                        </div>
+                           
+                    </div>
+                </div>
+               
+            }
+           
         </div>
    </div>
 </div>

@@ -18,8 +18,10 @@ namespace ZaDvermi.Controllers
             get { return Path.Combine(Server.MapPath("~/App_Data/Pictures")); }
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if (id.HasValue)
+                ViewBag.SelectedAlbum = id;
             return View(GetAlbums());
         }
 

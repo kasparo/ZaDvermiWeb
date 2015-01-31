@@ -3,13 +3,10 @@
 @using ZaDvermi.Security
 @model List<List<Article>>
 
-@for(int index = 1; index <= 3; index++)
+@foreach (var article in Model[0])
 {
-    var articleStorage = Model[index - 1];
-    <div class="col-xs-12 col-md-4" data-container-number="@index">
-        @foreach (var article in articleStorage)
-        {
-        <div class="panel panel-default" data-panel-number="@index" style="border-color: @article.CreatedBy.Color">
+    <div class="col-xs-12 col-md-4 board-item">
+        <div class="panel panel-default"  style="border-color: @article.CreatedBy.Color">
             <div class="panel-heading" style="background-color: @article.CreatedBy.Color">
                 <h3 class="panel-title">
                     <span class="glyphicon glyphicon-comment"></span> @article.CreatedBy.NickName 
@@ -26,6 +23,5 @@
                 }
             </div>
         </div>
-        }
     </div>
 }

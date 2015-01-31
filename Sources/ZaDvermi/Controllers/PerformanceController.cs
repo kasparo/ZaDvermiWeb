@@ -87,8 +87,29 @@ namespace ZaDvermi.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [Authorize(Roles = "Administrator,Manager")]
-        public ActionResult LinkArticle([Bind(Include = "Id,LinkedArticle1Id")]Article performance)
+        public ActionResult LinkArticle(FormCollection form)
         {
+            var idPerformance = int.Parse(form["Id"]);
+            var idArticle = form["LinkedArticle"];
+            var idPhotoAlbum = form["LinkedPhotoAlbum"];
+
+            var performance = Database.Articles.SingleOrDefault(a => a.Id == idPerformance);
+            if (performance != null)
+            {
+                Database.Entry(performance).Property(x => x.LinkedArticle1Id).IsModified = true;
+                Database.Entry(performance).Property(x => x.LinkedArticle2Id).IsModified = true;
+                if (!string.IsNullOrEmpty(idArticle))
+                    performance.LinkedArticle1Id = int.Parse(idArticle);
+                else
+                    performance.LinkedArticle1Id = null;
+
+                if (!string.IsNullOrEmpty(idPhotoAlbum))
+                    performance.LinkedArticle2Id = int.Parse(idPhotoAlbum);
+                else
+                    performance.LinkedArticle2Id = null;
+
+                Database.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
         

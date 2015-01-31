@@ -36,7 +36,12 @@
                         <div class="col-md-2"><span class="glyphicon glyphicon-phone-alt"></span> @user.PhoneNumber</div>
                         <div class="col-md-3"><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:@user.Email">@user.Email</a></div>
                         <div class="col-md-5"><span class="glyphicon glyphicon-home"></span> @user.Address</div>
-                        <div class="col-md-2">Datum narození: @user.Birthday.ToString("d.M.yyyy") </div>
+                        <div class="col-md-2 text-right">
+                            <span class="glyphicon glyphicon-certificate"></span> @user.Birthday.ToString("d.M.yyyy")
+                        </div>
+                    </div>
+                    <div class="panel-body text-right">
+                        <small style="font-size: 65%;color: #aea79f;">datum poslední aktivity: @user.LastActivity.ToString("d.M.yyyy HH:mm")</small> 
                     </div>
                 </div>
             </div>

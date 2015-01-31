@@ -11,6 +11,11 @@ namespace ZaDvermi.Common
             return roles.Any(r => html.ViewContext.RequestContext.HttpContext.User.IsInRole(r));
         }
 
+        public static bool IsAuthor(this HtmlHelper html, ZaDvermi.Models.User creator)
+        {
+            return creator.Email.Equals(html.ViewContext.RequestContext.HttpContext.User.Identity.Name, StringComparison.CurrentCultureIgnoreCase);
+        }
+
         public static void Shuffle<T>(this IList<T> list)
         {
             var rng = new Random();

@@ -34,7 +34,6 @@
                          @foreach (var performance in Model.Where(p => p.ValidFrom.Value.Date >= DateTime.Now.Date).OrderBy(p=>p.ValidFrom))
                          {
                             <div class="row well">
-                                
                                 <div class="col-md-7">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -42,6 +41,9 @@
                                                 @if (Html.IsAccessible("Administrator", "Manager"))
                                                 {
                                                     <a href="@Url.Action("Delete", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
+                                                    <a href="@Url.Action("LinkArticle", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs link-article" data-value="@performance.Id"><span class="glyphicon glyphicon glyphicon-link"></span> 
+                                                        <span>Připojit článek a album</span>
+                                                    </a>
                                                 }
                                             </h3>
                                         </div>
@@ -56,6 +58,23 @@
                                             @Html.Raw(HttpUtility.HtmlDecode(performance.Content))
                                         </div>
                                     </div>
+                                    @if(performance.LinkedArticle1 != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="@Url.Action("Detail", "Article", new {id = performance.LinkedArticle1Id})"><span class="glyphicon glyphicon-file"></span> @performance.LinkedArticle1.Title</a>
+                                            </div>
+                                        </div>
+                                    }
+                                     @if(performance.LinkedArticle2 != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="@Url.Action("Index", "Photo", new {id = performance.LinkedArticle2Id})"><span class="glyphicon glyphicon-film"></span> @performance.LinkedArticle2.Title</a>
+                                            </div>
+                                        </div>
+                                    }
+                                   
                                     
                                 </div>
                                 <div class="col-md-5" style="text-align: right">
@@ -72,31 +91,24 @@
                             {
                                 <li class="list-group-item">
                                     <h3>@(performance.Title) <small>@performance.ValidFrom.Value.ToString("d. M. yyyy")</small></h3>
+                                    <p>
+                                    @if(performance.LinkedArticle1 != null)
+                                    {
+                                        <a href="@Url.Action("Detail", "Article", new {id = performance.LinkedArticle1Id })" style="margin-right: 8px"><span class="glyphicon glyphicon-file"></span> @performance.LinkedArticle1.Title</a>
+                                    }
+                                    @if(performance.LinkedArticle2 != null)
+                                    {
+                                        <a href="@Url.Action("Index", "Photo", new {id = performance.LinkedArticle2Id})"><span class="glyphicon glyphicon-film"></span> @performance.LinkedArticle2.Title</a>
+                                    }
+                                    </p>
                                     <p>@Html.Raw(HttpUtility.HtmlDecode(performance.Content))</p>
-                                    @if (Html.IsAccessible("Administrator"))
+                                    @if (Html.IsAccessible("Administrator", "Manager"))
                                     {
                                         <a href="@Url.Action("Delete", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs delete-button"><span class="glyphicon glyphicon-trash"></span></a>
                                         <a href="@Url.Action("LinkArticle", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs link-article" data-value="@performance.Id"><span class="glyphicon glyphicon glyphicon-link"></span> 
-                                             @if (performance.LinkedArticle1Id != null)
-                                             {
-                                                <span>@performance.LinkedArticle1.Title</span>
-                                             }
-                                            else
-                                            {
-                                                 <span>Připojit článek</span>
-                                             }
+                                            <span>Připojit článek a album</span>
                                         </a>
-                                        <a href="@Url.Action("LinkPhotoAlbum", "Performance", new { id = performance.Id })" class="btn btn-default btn-xs link-performance" data-value="@performance.Id"><span class="glyphicon glyphicon glyphicon-link"></span> 
-                                            @if (performance.LinkedArticle2Id != null)
-                                             {
-                                                <span>@performance.LinkedArticle2.Title</span>
-                                             }
-                                            else
-                                            {
-                                                 <span>Připojit fotoalbum</span>
-                                             }
-                                            
-                                        </a>
+                                      
                                     }
                                 </li>
                             } 
@@ -112,7 +124,7 @@
 
      <!-- ADD ITEM on BOARD -->
     <div id="dialog-form-performance-article" title="Připojit článek">
-        @using (Html.BeginForm("LinkArticle", "Performance", FormMethod.Post, new { id = "dialog-form-performance-article" }))
+        @using (Html.BeginForm("LinkArticle", "Performance", FormMethod.Post, new { id = "editor-form-performance-article" }))
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("Id", 0, new { @id = "performance-id" });
@@ -120,12 +132,18 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         @Html.Label("Články")
-                        @Html.DropDownList("LinkedArticle1Id", (SelectList)ViewBag.Articles, "... vyber článek", new {@class = "form-control"})
+                        @Html.DropDownList("LinkedArticle", (SelectList)ViewBag.Articles, "... vyber článek", new { @class = "form-control" })
                     </div>
                 </div>
             </div>
-          
-            
+            <div class="row" style="margin: 5px 0">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Fotoalba")
+                        @Html.DropDownList("LinkedPhotoAlbum", (SelectList)ViewBag.PhotoAlbums, "... vyber fotoalbum", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
         }      
     </div>
 
@@ -150,7 +168,7 @@
                 resizable: false,
                 buttons: {
                     "Uložit": function () {
-                        $('#dialog-form-performance-article').submit();
+                        $('#editor-form-performance-article').submit();
                         $(this).dialog("close");
                     },
                     "Zpět": function () {

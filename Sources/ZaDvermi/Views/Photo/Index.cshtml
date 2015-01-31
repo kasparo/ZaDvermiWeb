@@ -42,9 +42,11 @@
         }
     </div>
     <div class="row " style="margin-top: 20px" >
-        <div class="col-md-12 photo-conatainer">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 photo-conatainer">
             
         </div>
+        <div class="col-md-1"></div>
     </div>
 </div>
 
@@ -77,7 +79,14 @@
                 // load images
                 $('.photo-conatainer').load('@Url.Action("List", "Photo")', { id: id });
             });
-            $('.album-link').first().click();
+            @if(ViewBag.SelectedAlbum != null)
+            {
+                 @: $('.album-link[data-id="@ViewBag.SelectedAlbum"]').click();
+            }
+            else
+            {
+                @: $('.album-link').first().click();
+            }
         });        
       
     </script>
