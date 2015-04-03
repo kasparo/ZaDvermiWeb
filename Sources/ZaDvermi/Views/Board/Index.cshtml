@@ -74,13 +74,12 @@
     
     <!-- ADD ITEM on BOARD -->
     <div id="dialog-form-board" title="Přidat příspěvek na nástěnku">
-        @if (Html.IsAccessible("Administrator", "Manager"))
+       
+        @using (Html.BeginForm("AddPost", "Board", FormMethod.Post, new { id = "editor-form-board" }))
         {
-            using (Html.BeginForm("AddPost", "Board", FormMethod.Post, new { id = "editor-form-board" }))
-            {
-                @Html.TextArea("Post", new { @class = "editor" })
-            }       
-        }
+            @Html.TextArea("Post", new { @class = "editor" })
+        }       
+       
     </div>
 
     <!-- ADD ITEM on NOTIFICATIONS -->

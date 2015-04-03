@@ -137,6 +137,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PerformanceController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -577,6 +578,7 @@
     <Content Include="Views\Book\List.cshtml" />
     <Content Include="Views\Board\_Notifications.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Production\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201401240850073_Init.resx">
