@@ -48,6 +48,7 @@
     </div>
         
 }
+
 <div class="container">  
     <div class="row">
         @foreach (var article in Model["Article"])
@@ -59,7 +60,7 @@
                         <h2><a href="@Url.Action("Detail", "Article", new {id = article.Id})">@article.Title</a></h2>
                         <div class="row">
                             <div class="col-md-6">
-                                <img  class="img-rounded img-responsive" src="@Url.Action("Download", "File", new {id = article.ArticleMedias.First().MediaItemId})" >
+                                <img class="img-rounded img-responsive" src="@Url.Action("Download", "File", new { id = article.ArticleMedias.Any() ? article.ArticleMedias.First().MediaItemId : 0 })">
                             </div>
                             <div class="col-md-6">
                                 <p>@(article.Preface.Length > 200 ? article.Preface.Substring(0, 200) + "..." : article.Preface)</p>
